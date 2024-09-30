@@ -1,4 +1,6 @@
 {
   "block.peculiardevices.lithium_ore": "Lithium Ore",
+  "creativetab.pd_tab": "Peculiar Devices",
+  "item.peculiardevices.lithium_ingot": "Lithium Ingot",
   "item.peculiardevices.raw_lithium": "Raw Lithium"
 }

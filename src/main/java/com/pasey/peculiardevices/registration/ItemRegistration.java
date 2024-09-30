@@ -14,6 +14,9 @@ public class ItemRegistration {
             DeferredRegister.create(ForgeRegistries.ITEMS, PeculiarDevices.MODID);
 
 
+    public static final RegistryObject<Item> LITHIUM_INGOT =
+            ITEMS.register("lithium_ingot", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> LITHIUM_ORE_ITEM =
             ITEMS.register("lithium_ore", () -> new BlockItem(LITHIUM_ORE.get(), new Item.Properties()));
 

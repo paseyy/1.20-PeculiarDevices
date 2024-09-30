@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PDLootTables extends VanillaBlockLoot {
+public class PDLootTablesProvider extends VanillaBlockLoot {
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {

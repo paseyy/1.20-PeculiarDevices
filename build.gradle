@@ -14,7 +14,7 @@ base {
 }
 
 // Mojang ships Java 21 to end users in 1.20.5+, so your mod should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
@@ -119,6 +119,14 @@ repositories {
     //     dir 'libs'
     // }
     maven {
+        name = "CurseForge"
+        url = "https://cursemaven.com"
+    }
+    maven {
+        name = "Forge"
+        url = "https://maven.minecraftforge.net/"
+    }
+    maven {
         url "https://maven.blamejared.com"
     }
     maven {
@@ -139,6 +147,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    implementation fg.deobf("curse.maven:jei-integration-265917:4999754")
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
