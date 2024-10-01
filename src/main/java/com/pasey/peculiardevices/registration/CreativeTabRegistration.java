@@ -20,6 +20,8 @@ public class CreativeTabRegistration {
                         output.accept(ItemRegistration.LITHIUM_ORE_ITEM.get());
                         output.accept(ItemRegistration.RAW_LITHIUM.get());
                         output.accept(ItemRegistration.LITHIUM_INGOT.get());
+
+                        output.accept(ItemRegistration.GEO_PIPE_ITEM.get());
                     })
                     .build()
     );

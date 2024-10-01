@@ -14,6 +14,7 @@ public class PDLangProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add(BlockRegistration.GEO_PIPE.get(), "Geothermal Pipe");
         add(BlockRegistration.LITHIUM_ORE.get(), "Lithium Ore");
 
         add(ItemRegistration.LITHIUM_INGOT.get(), "Lithium Ingot");

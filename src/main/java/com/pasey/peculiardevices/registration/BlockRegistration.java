@@ -1,6 +1,7 @@
 package com.pasey.peculiardevices.registration;
 
 import com.pasey.peculiardevices.PeculiarDevices;
+import com.pasey.peculiardevices.blocks.additionals.GeoPipe;
 import com.pasey.peculiardevices.blocks.materials.LithiumOre;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,4 +14,5 @@ public class BlockRegistration {
 
     public static final RegistryObject<LithiumOre> LITHIUM_ORE = BLOCKS.register("lithium_ore", LithiumOre::new);
 
+    public static final RegistryObject<GeoPipe> GEO_PIPE = BLOCKS.register("geo_pipe", GeoPipe::new);
 }

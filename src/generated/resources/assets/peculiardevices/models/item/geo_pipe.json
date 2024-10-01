@@ -1,0 +1,17 @@
+{
+  "parent": "peculiardevices:block/geo_pipe",
+  "display": {
+    "gui": {
+      "rotation": [
+        -150,
+        10,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    }
+  }
+}
