@@ -12,6 +12,8 @@ import net.minecraft.tags.BlockTags;
 public class PDTags {
     @SuppressWarnings("unused")
     public static class Blocks {
+        public static final TagKey<Block> PD_MACHINES = tag("pd_machines");
+
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(PeculiarDevices.MODID, name));
         }

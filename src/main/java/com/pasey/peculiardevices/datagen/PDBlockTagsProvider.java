@@ -2,6 +2,7 @@ package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
 import com.pasey.peculiardevices.registration.BlockRegistration;
+import com.pasey.peculiardevices.util.PDTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -32,6 +33,11 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
         tag(Tags.Blocks.ORES)
                 .add(BlockRegistration.LITHIUM_ORE.get())
+        ;
+
+        tag(PDTags.Blocks.PD_MACHINES)
+                .add(BlockRegistration.GEO_GENERATOR.get())
+                .add(BlockRegistration.GEO_PIPE.get())
         ;
     }
 }

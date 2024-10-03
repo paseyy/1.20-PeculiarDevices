@@ -13,6 +13,9 @@ public class ItemRegistration {
             DeferredRegister.create(ForgeRegistries.ITEMS, PeculiarDevices.MODID);
 
 
+    public static final RegistryObject<Item> GEO_GENERATOR_ITEM =
+            ITEMS.register("geo_generator", () -> new BlockItem(BlockRegistration.GEO_GENERATOR.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> GEO_PIPE_ITEM =
             ITEMS.register("geo_pipe", () -> new BlockItem(BlockRegistration.GEO_PIPE.get(), new Item.Properties()));
 

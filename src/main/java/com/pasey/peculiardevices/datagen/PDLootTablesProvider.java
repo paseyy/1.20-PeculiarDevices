@@ -23,6 +23,7 @@ public class PDLootTablesProvider extends VanillaBlockLoot {
 
     @Override
     protected void generate() {
+        dropSelf(BlockRegistration.GEO_GENERATOR.get());
         dropSelf(BlockRegistration.GEO_PIPE.get());
 
         add(BlockRegistration.LITHIUM_ORE.get(),

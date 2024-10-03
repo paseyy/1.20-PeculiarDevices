@@ -19,13 +19,14 @@ public class PDBlockStatesProvider extends BlockStateProvider {
     }
 
 
-
     @Override
     protected void registerStatesAndModels() {
+        horizontalBlock(BlockRegistration.GEO_GENERATOR.get(), state ->
+                models().getExistingFile(modLoc("block/geo_generator")));
+
         stackableBlock(BlockRegistration.GEO_PIPE.get());
 
         simpleBlockWithItem(BlockRegistration.LITHIUM_ORE.get(), cubeAll(BlockRegistration.LITHIUM_ORE.get()));
-
     }
 
     private void stackableBlock(Block block) {
