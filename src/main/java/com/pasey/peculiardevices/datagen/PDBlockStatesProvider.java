@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.blocks.additionals.GeoPipe;
+import com.pasey.peculiardevices.blocks.machines.GeoPipe;
 import com.pasey.peculiardevices.registration.BlockRegistration;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
