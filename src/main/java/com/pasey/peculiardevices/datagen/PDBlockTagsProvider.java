@@ -21,13 +21,18 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BlockRegistration.LITHIUM_ORE.get());
+                .add(BlockRegistration.GEO_PIPE.get())
+                .add(BlockRegistration.LITHIUM_ORE.get())
+        ;
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(BlockRegistration.LITHIUM_ORE.get());
+                .add(BlockRegistration.GEO_PIPE.get())
+                .add(BlockRegistration.LITHIUM_ORE.get())
+        ;
 
         tag(Tags.Blocks.ORES)
-                .add(BlockRegistration.LITHIUM_ORE.get());
+                .add(BlockRegistration.LITHIUM_ORE.get())
+        ;
     }
 }
 

@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.registration;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.blocks.additionals.GeoPipe;
+import com.pasey.peculiardevices.blocks.machines.GeoPipe;
 import com.pasey.peculiardevices.blocks.materials.LithiumOre;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
