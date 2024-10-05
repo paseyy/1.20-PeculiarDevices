@@ -1,15 +1,13 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.registration.ItemRegistration;
+import com.pasey.peculiardevices.registration.PDItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-
-import java.util.Objects;
 
 public class PDItemModelsProvider extends ItemModelProvider {
     private final ExistingFileHelper existingFileHelper;
@@ -21,11 +19,11 @@ public class PDItemModelsProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(ItemRegistration.LITHIUM_INGOT.get());
-        basicItem(ItemRegistration.RAW_LITHIUM.get());
+        basicItem(PDItems.LITHIUM_INGOT.get());
+        basicItem(PDItems.RAW_LITHIUM.get());
 
-        geoPipeItem(ItemRegistration.GEO_PIPE_ITEM.get());
-        blockItem(ItemRegistration.GEO_GENERATOR_ITEM.get());
+        geoPipeItem(PDItems.GEO_PIPE_ITEM.get());
+        blockItem(PDItems.GEO_GENERATOR_ITEM.get());
     }
 
     private void geoPipeItem(Item item) {

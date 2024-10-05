@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.registration.BlockRegistration;
+import com.pasey.peculiardevices.registration.PDBlocks;
 import com.pasey.peculiardevices.util.PDTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -22,22 +22,22 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BlockRegistration.GEO_PIPE.get())
-                .add(BlockRegistration.LITHIUM_ORE.get())
+                .add(PDBlocks.GEO_PIPE.get())
+                .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(BlockRegistration.GEO_PIPE.get())
-                .add(BlockRegistration.LITHIUM_ORE.get())
+                .add(PDBlocks.GEO_PIPE.get())
+                .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
         tag(Tags.Blocks.ORES)
-                .add(BlockRegistration.LITHIUM_ORE.get())
+                .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
         tag(PDTags.Blocks.PD_MACHINES)
-                .add(BlockRegistration.GEO_GENERATOR.get())
-                .add(BlockRegistration.GEO_PIPE.get())
+                .add(PDBlocks.GEO_GENERATOR.get())
+                .add(PDBlocks.GEO_PIPE.get())
         ;
     }
 }

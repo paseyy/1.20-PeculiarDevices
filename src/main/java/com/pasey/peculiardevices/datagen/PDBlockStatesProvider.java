@@ -2,7 +2,7 @@ package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
 import com.pasey.peculiardevices.blocks.machines.GeoPipe;
-import com.pasey.peculiardevices.registration.BlockRegistration;
+import com.pasey.peculiardevices.registration.PDBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -21,12 +21,12 @@ public class PDBlockStatesProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        horizontalBlock(BlockRegistration.GEO_GENERATOR.get(), state ->
+        horizontalBlock(PDBlocks.GEO_GENERATOR.get(), state ->
                 models().getExistingFile(modLoc("block/geo_generator")));
 
-        stackableBlock(BlockRegistration.GEO_PIPE.get());
+        stackableBlock(PDBlocks.GEO_PIPE.get());
 
-        simpleBlockWithItem(BlockRegistration.LITHIUM_ORE.get(), cubeAll(BlockRegistration.LITHIUM_ORE.get()));
+        simpleBlockWithItem(PDBlocks.LITHIUM_ORE.get(), cubeAll(PDBlocks.LITHIUM_ORE.get()));
     }
 
     private void stackableBlock(Block block) {

@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.registration.ItemRegistration;
+import com.pasey.peculiardevices.registration.PDItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 
 public class PDRecipeProvider extends RecipeProvider {
     private static final List<ItemLike> LITHIUM_SMELTABLES = List.of(
-            ItemRegistration.RAW_LITHIUM.get()
+            PDItems.RAW_LITHIUM.get()
     );
 
     public PDRecipeProvider(PackOutput packOutput) {
@@ -27,8 +27,8 @@ public class PDRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
-        PDOreSmelting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, ItemRegistration.LITHIUM_INGOT.get(), 0.25f, 200, "lithium_ingot");
-        PDOreBlasting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, ItemRegistration.LITHIUM_INGOT.get(), 0.25f, 100, "lithium_ingot");
+        PDOreSmelting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 200, "lithium_ingot");
+        PDOreBlasting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 100, "lithium_ingot");
     }
 
     protected static void PDOreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {

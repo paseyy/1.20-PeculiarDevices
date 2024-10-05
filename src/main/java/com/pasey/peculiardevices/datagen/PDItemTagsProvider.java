@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.registration.ItemRegistration;
+import com.pasey.peculiardevices.registration.PDItems;
 import com.pasey.peculiardevices.util.PDTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -24,16 +24,16 @@ public class PDItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(Tags.Items.INGOTS)
-                .add(ItemRegistration.LITHIUM_INGOT.get());
+                .add(PDItems.LITHIUM_INGOT.get());
 
         tag(Tags.Items.ORES)
-                .add(ItemRegistration.LITHIUM_ORE_ITEM.get());
+                .add(PDItems.LITHIUM_ORE_ITEM.get());
 
         tag(PDTags.Items.PD_MACHINES)
-                .add(ItemRegistration.GEO_PIPE_ITEM.get());
+                .add(PDItems.GEO_PIPE_ITEM.get());
 
         tag(Tags.Items.RAW_MATERIALS)
-                .add(ItemRegistration.RAW_LITHIUM.get());
+                .add(PDItems.RAW_LITHIUM.get());
 
     }
 }

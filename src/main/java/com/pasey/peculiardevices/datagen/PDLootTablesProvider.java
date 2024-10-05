@@ -1,8 +1,8 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.registration.BlockRegistration;
-import com.pasey.peculiardevices.registration.ItemRegistration;
+import com.pasey.peculiardevices.registration.PDBlocks;
+import com.pasey.peculiardevices.registration.PDItems;
 import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,11 +23,11 @@ public class PDLootTablesProvider extends VanillaBlockLoot {
 
     @Override
     protected void generate() {
-        dropSelf(BlockRegistration.GEO_GENERATOR.get());
-        dropSelf(BlockRegistration.GEO_PIPE.get());
+        dropSelf(PDBlocks.GEO_GENERATOR.get());
+        dropSelf(PDBlocks.GEO_PIPE.get());
 
-        add(BlockRegistration.LITHIUM_ORE.get(),
-                block -> createOreDrop(BlockRegistration.LITHIUM_ORE.get(), ItemRegistration.RAW_LITHIUM.get()));
+        add(PDBlocks.LITHIUM_ORE.get(),
+                block -> createOreDrop(PDBlocks.LITHIUM_ORE.get(), PDItems.RAW_LITHIUM.get()));
     }
 
 }

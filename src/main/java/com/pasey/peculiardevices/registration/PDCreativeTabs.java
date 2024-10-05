@@ -8,21 +8,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
-public class CreativeTabRegistration {
+public class PDCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PeculiarDevices.MODID);
 
     public static final RegistryObject<CreativeModeTab> PD_TAB = CREATIVE_MODE_TABS.register("pd_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ItemRegistration.LITHIUM_ORE_ITEM.get()))
+                    .icon(() -> new ItemStack(PDItems.LITHIUM_ORE_ITEM.get()))
                     .title(Component.translatable("creativetab.pd_tab"))
                     .displayItems((displayParameters, output) -> {
-                        output.accept(ItemRegistration.LITHIUM_ORE_ITEM.get());
-                        output.accept(ItemRegistration.RAW_LITHIUM.get());
-                        output.accept(ItemRegistration.LITHIUM_INGOT.get());
+                        output.accept(PDItems.LITHIUM_ORE_ITEM.get());
+                        output.accept(PDItems.RAW_LITHIUM.get());
+                        output.accept(PDItems.LITHIUM_INGOT.get());
 
-                        output.accept(ItemRegistration.GEO_GENERATOR_ITEM.get());
-                        output.accept(ItemRegistration.GEO_PIPE_ITEM.get());
+                        output.accept(PDItems.GEO_GENERATOR_ITEM.get());
+                        output.accept(PDItems.GEO_PIPE_ITEM.get());
 
                     })
                     .build()
