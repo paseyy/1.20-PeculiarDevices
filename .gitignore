@@ -20,12 +20,10 @@ build
 # other
 eclipse
 run
-run-data\logs
-C:\Users\freib\Documents\mc-modding\1.20-PeculiarDevices\run-data
+run-data/**
 
 # generated
-src\generated\
-src\generated\resources\
+src/generated/**
 
 # Files from Forge MDK
-forge*changelog.txt
+forge*changelog.txt!/run-data/
