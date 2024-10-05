@@ -29,5 +29,6 @@ public class DataGeneration {
                 new PDItemTagsProvider(packOutput, lookupProvider, pdBlockTags, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(PDLootTablesProvider::new, LootContextParamSets.BLOCK))));
+        generator.addProvider(event.includeServer(), new PDWorldGenProvider(packOutput, lookupProvider));
     }
 }

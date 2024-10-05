@@ -31,7 +31,15 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
+        tag(Tags.Blocks.ORE_RATES_SINGULAR)
+                .add(PDBlocks.LITHIUM_ORE.get())
+        ;
+
         tag(Tags.Blocks.ORES)
+                .add(PDBlocks.LITHIUM_ORE.get())
+        ;
+
+        tag(Tags.Blocks.ORES_IN_GROUND_STONE)
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
@@ -39,6 +47,7 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
                 .add(PDBlocks.GEO_GENERATOR.get())
                 .add(PDBlocks.GEO_PIPE.get())
         ;
+
     }
 }
 

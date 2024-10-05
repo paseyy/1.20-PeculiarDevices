@@ -29,11 +29,13 @@ public class PDItemTagsProvider extends ItemTagsProvider {
         tag(Tags.Items.ORES)
                 .add(PDItems.LITHIUM_ORE_ITEM.get());
 
-        tag(PDTags.Items.PD_MACHINES)
-                .add(PDItems.GEO_PIPE_ITEM.get());
 
         tag(Tags.Items.RAW_MATERIALS)
                 .add(PDItems.RAW_LITHIUM.get());
 
+
+        tag(PDTags.Items.PD_MACHINES)
+                .add(PDItems.GEO_PIPE_ITEM.get())
+                .add(PDItems.GEO_GENERATOR_ITEM.get());
     }
 }
