@@ -1,14 +1,17 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
+import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
 import com.pasey.peculiardevices.registration.PDBlocks;
 import com.pasey.peculiardevices.util.PDTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -21,13 +24,26 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(PDBlocks.GEO_PIPE.get())
+        Block[] machineBlocks = PDBlocks.BLOCKS.getEntries().stream()
+                .map(RegistryObject::get)
+                .filter(block -> block instanceof BaseMachineBlock)
+                .toArray(Block[]::new);
+
+        // generics
+        tag(PDTags.Blocks.PD_MACHINES).add(machineBlocks);
+
+        tag(PDTags.Blocks.PD_ORES)
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
+
+        // specifics
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .addTag(PDTags.Blocks.PD_MACHINES)
+                .addTag(PDTags.Blocks.PD_ORES)
+        ;
+
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(PDBlocks.GEO_PIPE.get())
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
@@ -36,17 +52,13 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
         ;
 
         tag(Tags.Blocks.ORES)
-                .add(PDBlocks.LITHIUM_ORE.get())
+                .addTag(PDTags.Blocks.PD_ORES)
         ;
 
         tag(Tags.Blocks.ORES_IN_GROUND_STONE)
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
-        tag(PDTags.Blocks.PD_MACHINES)
-                .add(PDBlocks.GEO_GENERATOR.get())
-                .add(PDBlocks.GEO_PIPE.get())
-        ;
 
     }
 }

@@ -13,6 +13,7 @@ public class PDTags {
     @SuppressWarnings("unused")
     public static class Blocks {
         public static final TagKey<Block> PD_MACHINES = tag("pd_machines");
+        public static final TagKey<Block> PD_ORES = tag("pd_ores");
 
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(PeculiarDevices.MODID, name));

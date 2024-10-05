@@ -23,6 +23,8 @@ public class PDBlockStatesProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         horizontalBlock(PDBlocks.GEO_GENERATOR.get(), state ->
                 models().getExistingFile(modLoc("block/geo_generator")));
+        horizontalBlock(PDBlocks.VIBRATORY_MILL.get(), state ->
+                models().getExistingFile(modLoc("block/vibratory_mill")));
 
         stackableBlock(PDBlocks.GEO_PIPE.get());
 

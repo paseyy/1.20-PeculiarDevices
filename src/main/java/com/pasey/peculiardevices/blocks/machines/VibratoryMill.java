@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
-public class GeoGenerator extends BaseMachineBlock {
-    public GeoGenerator() {
+public class VibratoryMill extends BaseMachineBlock {
+    public VibratoryMill() {
         super(Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .requiresCorrectToolForDrops()
@@ -24,4 +24,3 @@ public class GeoGenerator extends BaseMachineBlock {
         return null;
     }
 }
-

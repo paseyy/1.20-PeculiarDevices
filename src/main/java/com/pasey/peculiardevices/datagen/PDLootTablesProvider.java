@@ -25,6 +25,7 @@ public class PDLootTablesProvider extends VanillaBlockLoot {
     protected void generate() {
         dropSelf(PDBlocks.GEO_GENERATOR.get());
         dropSelf(PDBlocks.GEO_PIPE.get());
+        dropSelf(PDBlocks.VIBRATORY_MILL.get());
 
         add(PDBlocks.LITHIUM_ORE.get(),
                 block -> createOreDrop(PDBlocks.LITHIUM_ORE.get(), PDItems.RAW_LITHIUM.get()));

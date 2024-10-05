@@ -24,6 +24,7 @@ public class PDItemModelsProvider extends ItemModelProvider {
 
         geoPipeItem(PDItems.GEO_PIPE_ITEM.get());
         blockItem(PDItems.GEO_GENERATOR_ITEM.get());
+        blockItem(PDItems.VIBRATORY_MILL_ITEM.get());
     }
 
     private void geoPipeItem(Item item) {

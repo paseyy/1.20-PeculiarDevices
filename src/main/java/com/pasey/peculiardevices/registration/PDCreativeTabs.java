@@ -23,6 +23,7 @@ public class PDCreativeTabs {
 
                         output.accept(PDItems.GEO_GENERATOR_ITEM.get());
                         output.accept(PDItems.GEO_PIPE_ITEM.get());
+                        output.accept(PDItems.VIBRATORY_MILL_ITEM.get());
 
                     })
                     .build()

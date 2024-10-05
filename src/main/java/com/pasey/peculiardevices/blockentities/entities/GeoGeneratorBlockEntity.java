@@ -1,6 +1,6 @@
-package com.pasey.peculiardevices.blocks.entities;
+package com.pasey.peculiardevices.blockentities.entities;
 
-import com.pasey.peculiardevices.blocks.entities.base.PDGenerator;
+import com.pasey.peculiardevices.blockentities.entities.base.PDGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;

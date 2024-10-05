@@ -27,4 +27,7 @@ public class PDItems {
 
     public static final RegistryObject<Item> RAW_LITHIUM =
             ITEMS.register("raw_lithium", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> VIBRATORY_MILL_ITEM =
+            ITEMS.register("vibratory_mill", () -> new BlockItem(PDBlocks.VIBRATORY_MILL.get(), new Item.Properties()));
 }
