@@ -1,8 +1,12 @@
 package com.pasey.peculiardevices.blocks.base;
 
+import com.pasey.peculiardevices.blockentities.base.BaseMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -11,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,10 +54,20 @@ public abstract class BaseMachineBlock extends BaseEntityBlock {
     }
 
     @Override
-    @Nullable
     @ParametersAreNonnullByDefault
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return null;
-    }
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if(!pLevel.isClientSide()) {
+            BlockEntity be = pLevel.getBlockEntity(pPos);
+            if(be instanceof BaseMachineBlockEntity machineBE) {
+                ItemStackHandler inventory = machineBE.getInventory();
+                for(int i = 0; i < inventory.getSlots(); i++) {
+                    ItemStack stack = inventory.getStackInSlot(i);
+                    var entity = new ItemEntity(pLevel, pPos.getX() + 0.5, pPos.getY() + 0.5 , pPos.getZ() + 0.5, stack);
+                    pLevel.addFreshEntity(entity);
+                }
+            }
+        }
 
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+    }
 }
