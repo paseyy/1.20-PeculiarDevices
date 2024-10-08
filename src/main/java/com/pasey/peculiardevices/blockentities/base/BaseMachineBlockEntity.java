@@ -3,6 +3,9 @@ package com.pasey.peculiardevices.blockentities.base;
 import com.pasey.peculiardevices.PeculiarDevices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -12,6 +15,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class BaseMachineBlockEntity extends BlockEntity {
     protected final ItemStackHandler inventory;
@@ -20,14 +24,15 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
     public BaseMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState);
 
-         inventory = new ItemStackHandler(inventorySlots) {
+        inventory = new ItemStackHandler(inventorySlots) {
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
                 BaseMachineBlockEntity.this.setChanged();
+                // BaseMachineBlockEntity.this.level.sendBlockUpdated(BaseMachineBlockEntity.this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
-         };
-         optional = LazyOptional.of(() -> this.inventory);
+        };
+        optional = LazyOptional.of(() -> this.inventory);
     }
 
     @Override
@@ -60,6 +65,20 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
         pTag.put(PeculiarDevices.MODID, data);
     }
 
+    @Override
+    @NotNull
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
+        saveAdditional(nbt);
+        return nbt;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
     public ItemStackHandler getInventory() {
         return this.inventory;
     }
@@ -70,5 +89,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
 
     public void setStackInSlot(int slot, ItemStack stack) {
         this.inventory.setStackInSlot(slot, stack);
+    }
+
+    public LazyOptional<ItemStackHandler> getOptional() {
+        return optional;
     }
 }

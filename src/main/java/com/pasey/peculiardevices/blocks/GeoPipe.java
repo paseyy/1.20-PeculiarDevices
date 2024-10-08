@@ -1,4 +1,4 @@
-package com.pasey.peculiardevices.blocks.machines;
+package com.pasey.peculiardevices.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

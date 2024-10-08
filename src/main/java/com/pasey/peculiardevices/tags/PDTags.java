@@ -1,4 +1,4 @@
-package com.pasey.peculiardevices.util;
+package com.pasey.peculiardevices.tags;
 
 import com.pasey.peculiardevices.PeculiarDevices;
 import net.minecraft.resources.ResourceLocation;

@@ -3,7 +3,7 @@ package com.pasey.peculiardevices.datagen;
 import com.pasey.peculiardevices.PeculiarDevices;
 import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
 import com.pasey.peculiardevices.registration.PDBlocks;
-import com.pasey.peculiardevices.util.PDTags;
+import com.pasey.peculiardevices.tags.PDTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;

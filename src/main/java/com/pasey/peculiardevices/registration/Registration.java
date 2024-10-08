@@ -8,5 +8,6 @@ public class Registration {
         PDItems.ITEMS.register(modEventBus);
         PDBlocks.BLOCKS.register(modEventBus);
         PDBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        PDMenus.MENU_TYPES.register(modEventBus);
     }
 }

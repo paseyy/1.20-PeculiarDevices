@@ -4,17 +4,17 @@ import com.pasey.peculiardevices.blockentities.VibratoryMillBlockEntity;
 import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
 import com.pasey.peculiardevices.registration.PDBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,36 +41,18 @@ public class VibratoryMill extends BaseMachineBlock {
     @NotNull
     @ParametersAreNonnullByDefault
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if(!pLevel.isClientSide()) {
-            BlockEntity be = pLevel.getBlockEntity(pPos);
-            if (be instanceof VibratoryMillBlockEntity vibratoryMillBE) {
-                ItemStack stack = pPlayer.getItemInHand(pHand);
-                if(stack.isEmpty()) { // Player has empty hand
-                    if(vibratoryMillBE.peek().isEmpty()) {
-                        pPlayer.sendSystemMessage(Component.literal("No item present"));
-                        return InteractionResult.SUCCESS;
-                    }
-                    else { // There are items in the mill!
-                        ItemStack extracted = vibratoryMillBE.pop();
-                        pPlayer.setItemInHand(pHand, extracted);
-                    }
-                }
-                else { // Player has something in hand
-                    if(vibratoryMillBE.isFull()) {
-                        pPlayer.sendSystemMessage(Component.literal("Inventory full"));
-                        return InteractionResult.SUCCESS;
-                    }
-                    else {
-                        ItemStack toInsert = stack.copy();
-                        ItemStack remainder = vibratoryMillBE.push(toInsert);
-                        pPlayer.setItemInHand(pHand, remainder);
-                    }
-                }
+        BlockEntity be = pLevel.getBlockEntity(pPos);
 
-                return InteractionResult.SUCCESS;
-            }
+        if(!(be instanceof VibratoryMillBlockEntity blockEntity))
+            return InteractionResult.PASS;
+
+        if(pLevel.isClientSide())
+            return InteractionResult.SUCCESS;
+
+        if(pPlayer instanceof ServerPlayer sPlayer) {
+            NetworkHooks.openScreen(sPlayer, blockEntity, pPos);
         }
 
-        return InteractionResult.sidedSuccess(pLevel.isClientSide());
+        return InteractionResult.CONSUME;
     }
 }
