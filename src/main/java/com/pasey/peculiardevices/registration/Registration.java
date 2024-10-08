@@ -9,5 +9,6 @@ public class Registration {
         PDBlocks.BLOCKS.register(modEventBus);
         PDBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         PDMenus.MENU_TYPES.register(modEventBus);
+        PDRecipes.SERIALIZERS.register(modEventBus);
     }
 }

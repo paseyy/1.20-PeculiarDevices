@@ -20,13 +20,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BaseMachineBlockEntity extends BlockEntity implements MenuProvider, BlockEntityTicker<BlockEntity> {
+public abstract class MachineBlockEntity extends BlockEntity implements MenuProvider, BlockEntityTicker<BlockEntity> {
     public static int INVENTORY_SLOTS;
     protected Component TITLE;
     protected final ItemStackHandler inventory;
     protected final LazyOptional<ItemStackHandler> optional;
 
-    public BaseMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
+    public MachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState);
 
         INVENTORY_SLOTS = inventorySlots;
@@ -34,7 +34,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
-                BaseMachineBlockEntity.this.setChanged();
+                MachineBlockEntity.this.setChanged();
                 // BaseMachineBlockEntity.this.level.sendBlockUpdated(BaseMachineBlockEntity.this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
@@ -106,4 +106,5 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     public LazyOptional<ItemStackHandler> getOptional() {
         return optional;
     }
+
 }

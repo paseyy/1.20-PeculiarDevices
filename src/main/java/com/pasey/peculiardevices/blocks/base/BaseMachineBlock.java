@@ -1,6 +1,6 @@
 package com.pasey.peculiardevices.blocks.base;
 
-import com.pasey.peculiardevices.blockentities.base.BaseMachineBlockEntity;
+import com.pasey.peculiardevices.blockentities.base.MachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -58,7 +58,7 @@ public abstract class BaseMachineBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if(!pLevel.isClientSide()) {
             BlockEntity be = pLevel.getBlockEntity(pPos);
-            if(be instanceof BaseMachineBlockEntity machineBE) {
+            if(be instanceof MachineBlockEntity machineBE) {
                 ItemStackHandler inventory = machineBE.getInventory();
                 for(int i = 0; i < inventory.getSlots(); i++) {
                     ItemStack stack = inventory.getStackInSlot(i);
