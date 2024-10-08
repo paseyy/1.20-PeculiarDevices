@@ -3,11 +3,14 @@ package com.pasey.peculiardevices.blockentities.base;
 import com.pasey.peculiardevices.PeculiarDevices;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,13 +20,16 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BaseMachineBlockEntity extends BlockEntity {
+public abstract class BaseMachineBlockEntity extends BlockEntity implements MenuProvider, BlockEntityTicker<BlockEntity> {
+    public static int INVENTORY_SLOTS;
+    protected Component TITLE;
     protected final ItemStackHandler inventory;
     protected final LazyOptional<ItemStackHandler> optional;
 
     public BaseMachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState);
 
+        INVENTORY_SLOTS = inventorySlots;
         inventory = new ItemStackHandler(inventorySlots) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -77,6 +83,12 @@ public abstract class BaseMachineBlockEntity extends BlockEntity {
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    @NotNull
+    public Component getDisplayName() {
+        return TITLE;
     }
 
     public ItemStackHandler getInventory() {

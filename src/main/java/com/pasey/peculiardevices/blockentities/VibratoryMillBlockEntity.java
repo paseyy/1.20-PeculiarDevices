@@ -10,29 +10,33 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class VibratoryMillBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
-    private static final Component TITLE =
-            Component.translatable("block." + PeculiarDevices.MODID + ".vibratory_mill");
+import javax.annotation.ParametersAreNonnullByDefault;
+
+public class VibratoryMillBlockEntity extends BaseMachineBlockEntity {
     public static final int INVENTORY_SLOTS = 4;
 
 
     public VibratoryMillBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(PDBlockEntities.VIBRATORY_MILL_BE.get(), pPos, pBlockState, INVENTORY_SLOTS);
-    }
 
+        TITLE = Component.translatable("block." + PeculiarDevices.MODID + ".vibratory_mill");
+    }
 
     @Override
-    @NotNull
-    public Component getDisplayName() {
-        return TITLE;
+    @ParametersAreNonnullByDefault
+    public void tick(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity) {
+
     }
 
+    @Override
     @Nullable
-    @Override
+    @ParametersAreNonnullByDefault
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new VibratoryMillMenu(pContainerId, pPlayerInventory, this);
     }
