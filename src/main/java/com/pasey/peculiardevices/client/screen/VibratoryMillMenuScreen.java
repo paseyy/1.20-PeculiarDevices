@@ -26,12 +26,21 @@ public class VibratoryMillMenuScreen extends AbstractContainerScreen<VibratoryMi
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         renderBackground(pGuiGraphics);
         pGuiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+
+        renderProgressArrow(pGuiGraphics, this.leftPos + 79, this.topPos + 35, 176, 0);
     }
 
     @Override
     @ParametersAreNonnullByDefault
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+    }
+
+    private void renderProgressArrow(GuiGraphics pGuiGraphics, int targetX, int targetY, int sourceX, int sourceY) {
+        if(menu.isCrafting()) {
+            pGuiGraphics.blit(TEXTURE, targetX, targetY, sourceX, sourceY, menu.getProgressArrowSize(), 17);
+        }
     }
 }

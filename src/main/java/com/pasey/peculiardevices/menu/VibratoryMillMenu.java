@@ -1,30 +1,31 @@
 package com.pasey.peculiardevices.menu;
 
 import com.pasey.peculiardevices.blockentities.VibratoryMillBlockEntity;
-import com.pasey.peculiardevices.menu.base.PDMachineMenu;
+import com.pasey.peculiardevices.menu.base.ProcessorMenu;
 import com.pasey.peculiardevices.menu.util.OutputSlotItemHandler;
 import com.pasey.peculiardevices.registration.PDMenus;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Objects;
 
-public class VibratoryMillMenu extends PDMachineMenu<VibratoryMillBlockEntity> {
+public class VibratoryMillMenu extends ProcessorMenu<VibratoryMillBlockEntity> {
 
     // Client Constructor
     public VibratoryMillMenu(int containerId, Inventory playerInv, FriendlyByteBuf additionalData) {
-        this(
-                containerId,
-                playerInv,
-                Objects.requireNonNull(playerInv.player.level().getBlockEntity(additionalData.readBlockPos()))
-        );
+        this(containerId, playerInv,
+                Objects.requireNonNull(playerInv.player.level().getBlockEntity(additionalData.readBlockPos())),
+                new SimpleContainerData(2));
     }
 
     // Server Constructor
-    public VibratoryMillMenu(int containerId, Inventory playerInv, BlockEntity blockEntity) {
-        super(PDMenus.VIBRATORY_MILL_MENU.get(), containerId, (VibratoryMillBlockEntity) blockEntity);
+    public VibratoryMillMenu(int containerId, Inventory playerInv, BlockEntity blockEntity, ContainerData data) {
+        super(PDMenus.VIBRATORY_MILL_MENU.get(), playerInv, containerId, (VibratoryMillBlockEntity) blockEntity, data);
 
         createPlayerHotbar(playerInv);
         createPlayerInventory(playerInv);
@@ -40,4 +41,9 @@ public class VibratoryMillMenu extends PDMachineMenu<VibratoryMillBlockEntity> {
             addSlot(new OutputSlotItemHandler(inventory, 3, 109, 54));
         });
     }
+
+    public int getProgressArrowSize() {
+        return Mth.ceil(getScaledProgress() * 24);
+    }
+
 }

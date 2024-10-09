@@ -4,28 +4,125 @@ import com.pasey.peculiardevices.recipe.base.BaseRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends MachineBlockEntity {
-    public ProcessorBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
+    protected int progress = 0;
+    protected int maxProgress;
+    protected final ContainerData data;
+
+
+    public ProcessorBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, int ticksToCraft) {
         super(pType, pPos, pBlockState, inventorySlots);
+        maxProgress = ticksToCraft;
+
+        this.data = new ContainerData() {
+            @Override
+            public int get(int pIndex) {
+                return switch (pIndex) {
+                    case 0 -> ProcessorBlockEntity.this.progress;
+                    case 1 -> ProcessorBlockEntity.this.maxProgress;
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int pIndex, int pValue) {
+                switch (pIndex) {
+                    case 0 -> ProcessorBlockEntity.this.progress = pValue;
+                    case 1 -> ProcessorBlockEntity.this.maxProgress = pValue;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        };
     }
 
     @Override
     @ParametersAreNonnullByDefault
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity) {
+    public void tick() {
+        if(level != null && level.isClientSide())
+            return;
 
+        if(hasRecipe()) {
+            progress++;
+            System.out.println("Progress " + progress);
+            setChanged();
+
+            if (progress >= maxProgress) {
+                craftItem();
+                progress = 0;
+            }
+        }
+        else {
+            progress = 0;
+            setChanged();
+        }
+    }
+
+
+    private void craftItem() {
+        Optional<T> recipe = getCurrentRecipe();
+        if(recipe.isEmpty()) {
+            System.err.println("Empty recipe despite successful check!");
+            return;
+        }
+
+
+        NonNullList<Ingredient> inputs = recipe.get().getIngredients();
+        for (Ingredient ingredient : inputs) {
+            for (int slot : this.getInputSlots()) {
+                if (ingredient.test(inventory.getStackInSlot(slot))) {
+                    inventory.extractItem(slot, ingredient.getItems()[0].getCount(), false);
+                    break;
+                }
+
+                System.err.println("Necessary ingredients for recipe have not been found!");
+            }
+        }
+
+        boolean success = false;
+        NonNullList<ItemStack> outputs = recipe.get().getOutputs();
+        for (ItemStack outputItem : outputs) {
+            for (int slot : this.getOutputSlots()) {
+                ItemStack inventoryItem = inventory.getStackInSlot(slot);
+                if (outputItem.getItem() == inventoryItem.getItem()
+                        && outputItem.getCount() + inventoryItem.getCount() < outputItem.getMaxStackSize())
+                {
+                    inventory.setStackInSlot(slot, new ItemStack(outputItem.getItem(),
+                            inventory.getStackInSlot(slot).getCount() + outputItem.getCount()));
+                    success = true;
+                    break;
+                }
+            }
+
+            if(success)
+                break;
+
+            // Item is not present in inventory slots, move it to empty slot
+            for (int slot : this.getOutputSlots()) {
+                if (inventory.getStackInSlot(slot).isEmpty()) {
+                    inventory.setStackInSlot(slot, new ItemStack(outputItem.getItem(), outputItem.getCount()));
+                    success = true;
+                    break;
+                }
+            }
+
+            if(!success)
+                System.err.println("Could not craft item despite there being room!");
+        }
     }
 
     private boolean hasRecipe() {
@@ -83,8 +180,15 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
 
     protected abstract RecipeType<T> getRecipeType();
 
-
     protected abstract NonNullList<Integer> getInputSlots();
 
     protected abstract NonNullList<Integer> getOutputSlots();
+
+    public int getProgress() {
+        return progress;
+    }
+    
+    public int getMaxProgress() {
+        return maxProgress;
+    }
 }

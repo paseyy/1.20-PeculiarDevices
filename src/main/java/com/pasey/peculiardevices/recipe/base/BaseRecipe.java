@@ -2,16 +2,12 @@ package com.pasey.peculiardevices.recipe.base;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.recipe.MillingRecipe;
-import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.animal.TropicalFish;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -76,6 +72,11 @@ public abstract class BaseRecipe<T extends BaseRecipe<T>> implements Recipe<Simp
     @NotNull
     public abstract RecipeType<T> getType();
 
+    @Override
+    @NotNull
+    public NonNullList<Ingredient> getIngredients() {
+        return inputItems;
+    }
 
     public NonNullList<ItemStack> getOutputs() {
         return outputItems;
@@ -110,16 +111,13 @@ public abstract class BaseRecipe<T extends BaseRecipe<T>> implements Recipe<Simp
         }
 
         @Override
+        @ParametersAreNonnullByDefault
         public @Nullable T fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(pBuffer));
-            }
+            inputs.replaceAll(ignored -> Ingredient.fromNetwork(pBuffer));
 
             NonNullList<ItemStack> outputs = NonNullList.withSize(pBuffer.readInt(), ItemStack.EMPTY);
-            for (int i = 0; i < outputs.size(); i++) {
-                outputs.set(i, pBuffer.readItem());
-            }
+            outputs.replaceAll(ignored -> pBuffer.readItem());
 
             return recipeFactory.create(inputs, outputs, pRecipeId);
         }
@@ -141,6 +139,4 @@ public abstract class BaseRecipe<T extends BaseRecipe<T>> implements Recipe<Simp
             T create(NonNullList<Ingredient> input, NonNullList<ItemStack> output, ResourceLocation id);
         }
     }
-
-
 }

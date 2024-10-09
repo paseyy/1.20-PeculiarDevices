@@ -4,10 +4,7 @@ import com.pasey.peculiardevices.blockentities.base.MachineBlockEntity;
 import com.pasey.peculiardevices.registration.PDBlocks;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
-public abstract class PDMachineMenu<T extends MachineBlockEntity> extends AbstractContainerMenu {
+public abstract class MachineMenu<T extends MachineBlockEntity> extends AbstractContainerMenu {
     public static final int PLAYER_INVENTORY_SLOTS = 36;
     public static final int PLAYER_INVENTORY_ROWS = 3;
     public static final int PLAYER_INVENTORY_COLS = 9;
@@ -25,12 +22,15 @@ public abstract class PDMachineMenu<T extends MachineBlockEntity> extends Abstra
     protected final T blockEntity;
     protected final ContainerLevelAccess levelAccess;
 
-    protected PDMachineMenu(@Nullable MenuType<?> pMenuType, int pContainerId, T pBlockEntity) {
+
+    protected MachineMenu(@Nullable MenuType<?> pMenuType, int pContainerId, T pBlockEntity) {
         super(pMenuType, pContainerId);
         blockEntity = pBlockEntity;
         INVENTORY_SLOTS = T.INVENTORY_SLOTS;
         this.levelAccess =
                 ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
+
+
     }
 
 
@@ -97,7 +97,6 @@ public abstract class PDMachineMenu<T extends MachineBlockEntity> extends Abstra
     public boolean stillValid(Player pPlayer) {
         return stillValid(levelAccess, pPlayer, PDBlocks.VIBRATORY_MILL.get());
     }
-
 
     public T getBlockEntity() {
         return blockEntity;

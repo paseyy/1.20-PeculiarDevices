@@ -20,16 +20,19 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class MachineBlockEntity extends BlockEntity implements MenuProvider, BlockEntityTicker<BlockEntity> {
+public abstract class MachineBlockEntity extends BlockEntity implements MenuProvider, TickableBlockEntity {
     public static int INVENTORY_SLOTS;
     protected Component TITLE;
+    public static BlockEntityType<? extends MachineBlockEntity> TYPE;
+
     protected final ItemStackHandler inventory;
     protected final LazyOptional<ItemStackHandler> optional;
 
-    public MachineBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
+    public MachineBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState);
 
         INVENTORY_SLOTS = inventorySlots;
+        TYPE = pType;
         inventory = new ItemStackHandler(inventorySlots) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -83,6 +86,18 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public static <E extends BlockEntity> BlockEntityTicker<E> createTickerHelper(
+            BlockEntityType<E> blockEntityType,
+            BlockEntityType<? extends MachineBlockEntity> expectedType) {
+
+        // Verify the blockEntityType matches the expected type
+        return blockEntityType == expectedType ? (level, pos, state, entity) -> {
+            if (entity instanceof TickableBlockEntity tickableEntity) {
+                tickableEntity.tick();
+            }
+        } : null;
     }
 
     @Override

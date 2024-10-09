@@ -28,7 +28,6 @@ public class MillingRecipe extends BaseRecipe<MillingRecipe> {
     public static class Type implements RecipeType<MillingRecipe> {
         public static final Type INSTANCE = new Type();
         public static final ResourceLocation ID = new ResourceLocation(PeculiarDevices.MODID, "milling");
-
     }
 
     public static class Serializer extends BaseRecipe.Serializer<MillingRecipe> {
