@@ -19,7 +19,10 @@ public class PDCreativeTabs {
                     .displayItems((displayParameters, output) -> {
                         output.accept(PDItems.LITHIUM_ORE_ITEM.get());
                         output.accept(PDItems.RAW_LITHIUM.get());
+                        output.accept(PDItems.LITHIUM_MILLINGS.get());
                         output.accept(PDItems.LITHIUM_INGOT.get());
+
+                        output.accept(PDItems.BARBERTONITE_ORE_ITEM.get());
 
                         output.accept(PDItems.GEO_GENERATOR_ITEM.get());
                         output.accept(PDItems.GEO_PIPE_ITEM.get());

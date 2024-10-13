@@ -24,7 +24,8 @@ import java.util.function.Consumer;
 
 public class PDRecipeProvider extends RecipeProvider {
     private static final List<ItemLike> LITHIUM_SMELTABLES = List.of(
-            PDItems.RAW_LITHIUM.get()
+            PDItems.RAW_LITHIUM.get(),
+            PDItems.LITHIUM_MILLINGS.get()
     );
 
     public PDRecipeProvider(PackOutput packOutput) {
@@ -36,7 +37,7 @@ public class PDRecipeProvider extends RecipeProvider {
         PDOreSmelting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 200, "lithium_ingot");
         PDOreBlasting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 100, "lithium_ingot");
 
-        PDMilling(consumer, List.of(PDItems.RAW_LITHIUM.get()), List.of(new ItemStack(PDItems.LITHIUM_ORE_ITEM.get(), 2)), 0.25f, 200);
+        PDMilling(consumer, List.of(PDItems.RAW_LITHIUM.get()), List.of(new ItemStack(PDItems.LITHIUM_MILLINGS.get(), 2)), 0.25f, 200);
     }
 
 
