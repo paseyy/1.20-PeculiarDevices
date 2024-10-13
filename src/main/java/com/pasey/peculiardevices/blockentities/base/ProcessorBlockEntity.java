@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends MachineBlockEntity {
     protected int progress = 0;
+    // TODO: Make progress dependent on recipe
     protected int maxProgress;
     protected final ContainerData data;
 

@@ -43,16 +43,9 @@ public class PDRecipeProvider extends RecipeProvider {
     protected static void PDMilling(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients,
                                     List<ItemStack> pOutputs, float pExperience,
                                     int pCraftingTime) {
-        List<Ingredient> ingredientList = new java.util.ArrayList<>(Collections.emptyList());
-        for (ItemLike itemLike : pIngredients) {
-            ingredientList.add(Ingredient.of(itemLike));
-        }
-
-        String ingredientNames = pIngredients.stream().map(RecipeProvider::getItemName).reduce((String a, String b) -> a + "_and_" + b).orElseThrow();
-        String outputNames = pOutputs.stream().map(ItemStack::getItem)
-                .map(ForgeRegistries.ITEMS::getKey)
-                .filter(Objects::nonNull).map(ResourceLocation::getPath)
-                .reduce((String a, String b) -> "_and_" + b).orElseThrow();
+        List<Ingredient> ingredientList = itemLikeListAsIngredientList(pIngredients);
+        String ingredientNames = itemLikeListAsString(pIngredients);
+        String outputNames = itemListAsString(pOutputs);
 
         pFinishedRecipeConsumer.accept(
                 BaseRecipeBuilder
@@ -85,6 +78,28 @@ public class PDRecipeProvider extends RecipeProvider {
                     .unlockedBy(getHasName(itemlike), has(itemlike))
                     .save(pFinishedRecipeConsumer, PeculiarDevices.MODID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
+    }
 
+    protected static String itemListAsString(List<ItemStack> items) {
+        return items.stream()
+                .map(ItemStack::getItem)
+                .map(ForgeRegistries.ITEMS::getKey)
+                .filter(Objects::nonNull)
+                .map(ResourceLocation::getPath)
+                .reduce((String a, String b) -> "_and_" + b).orElseThrow();
+    }
+
+    protected static String itemLikeListAsString(List<ItemLike> items) {
+        return items.stream()
+                .map(RecipeProvider::getItemName)
+                .reduce((String a, String b) -> a + "_and_" + b).orElseThrow();
+    }
+
+    protected static List<Ingredient> itemLikeListAsIngredientList(List<ItemLike> items) {
+        List<Ingredient> result = new java.util.ArrayList<>(Collections.emptyList());
+        for (ItemLike itemLike : items) {
+            result.add(Ingredient.of(itemLike));
+        }
+        return result;
     }
 }

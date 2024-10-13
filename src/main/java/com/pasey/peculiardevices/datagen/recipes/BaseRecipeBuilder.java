@@ -1,6 +1,7 @@
 package com.pasey.peculiardevices.datagen.recipes;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pasey.peculiardevices.recipe.MillingRecipe;
 import com.pasey.peculiardevices.recipe.base.BaseRecipe;
@@ -54,6 +55,11 @@ public class BaseRecipeBuilder {
             @Override
             @ParametersAreNonnullByDefault
             public void serializeRecipeData(JsonObject pJson) {
+                pJson.addProperty("category", category.toString());
+                pJson.addProperty("craftingtime", craftingTime);
+                pJson.addProperty("experience", experience);
+                pJson.addProperty("group", group);
+
                 JsonArray ingredients = new JsonArray();
                 for (Ingredient ingredient : BaseRecipeBuilder.this.ingredients) {
                     ingredients.add(ingredient.toJson());
