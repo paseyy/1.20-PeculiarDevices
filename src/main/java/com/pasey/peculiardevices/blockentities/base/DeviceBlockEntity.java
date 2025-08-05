@@ -2,6 +2,7 @@ package com.pasey.peculiardevices.blockentities.base;
 
 import com.pasey.peculiardevices.PeculiarDevices;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -16,19 +17,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class MachineBlockEntity extends BlockEntity implements MenuProvider, TickableBlockEntity {
+public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvider, TickableBlockEntity {
     public static int INVENTORY_SLOTS;
     protected Component TITLE;
-    public static BlockEntityType<? extends MachineBlockEntity> TYPE;
+    public static BlockEntityType<? extends DeviceBlockEntity> TYPE;
+    private final ItemStackHandler inventory;
+    private final LazyOptional<IItemHandler>[] sidedHandlers;
+    protected final LazyOptional<ItemStackHandler> allOptional = LazyOptional.of(this::getInventory);
+    public abstract int[] getSlotsForFace(Direction side);
+    public abstract boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction side);
+    public abstract boolean canTakeItemThroughFace(int slot, Direction side);
 
-    protected final ItemStackHandler inventory;
-    protected final LazyOptional<ItemStackHandler> optional;
-
-    public MachineBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
+    public DeviceBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState);
 
         INVENTORY_SLOTS = inventorySlots;
@@ -37,40 +42,43 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
-                MachineBlockEntity.this.setChanged();
+                DeviceBlockEntity.this.setChanged();
                 // BaseMachineBlockEntity.this.level.sendBlockUpdated(BaseMachineBlockEntity.this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
-        optional = LazyOptional.of(() -> this.inventory);
+
+        this.sidedHandlers = SidedItemHandler.createSidedHandlers(this);
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return this.optional.cast();
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER && side != null) {
+            return sidedHandlers[side.ordinal()].cast();
         }
 
-        return super.getCapability(cap);
+        return super.getCapability(cap, side);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        this.optional.invalidate();
+        for (LazyOptional<IItemHandler> handler : sidedHandlers) {
+            handler.invalidate();
+        }
     }
 
     @Override
     public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
         CompoundTag data = pTag.getCompound(PeculiarDevices.MODID);
-        this.inventory.deserializeNBT(data.getCompound("Inventory"));
+        getInventory().deserializeNBT(data.getCompound("Inventory"));
     }
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
         var data = new CompoundTag();
-        data.put("Inventory", this.inventory.serializeNBT());
+        data.put("Inventory", getInventory().serializeNBT());
         pTag.put(PeculiarDevices.MODID, data);
     }
 
@@ -90,7 +98,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
 
     public static <E extends BlockEntity> BlockEntityTicker<E> createTickerHelper(
             BlockEntityType<E> blockEntityType,
-            BlockEntityType<? extends MachineBlockEntity> expectedType) {
+            BlockEntityType<? extends DeviceBlockEntity> expectedType) {
 
         // Verify the blockEntityType matches the expected type
         return blockEntityType == expectedType ? (level, pos, state, entity) -> {
@@ -119,7 +127,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements MenuProv
     }
 
     public LazyOptional<ItemStackHandler> getOptional() {
-        return optional;
+        return allOptional;
     }
 
 }

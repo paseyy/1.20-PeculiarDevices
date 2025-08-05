@@ -55,6 +55,9 @@ public class PDItems {
     public static final RegistryObject<Item> LITHIUM_ORE_ITEM =
             ITEMS.register("lithium_ore", () -> new BlockItem(PDBlocks.LITHIUM_ORE.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> MILLING_CHAMBER =
+            ITEMS.register("milling_chamber", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> RAW_BARBERTONITE =
             ITEMS.register("raw_barbertonite", () -> new Item(new Item.Properties()));
 

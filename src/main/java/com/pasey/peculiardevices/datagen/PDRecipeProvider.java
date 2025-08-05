@@ -87,7 +87,58 @@ public class PDRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.GEO_DEVICE_FRAME_ITEM.get())
+                .pattern("CSC")
+                .pattern("SBS")
+                .pattern("CSC")
+                .define('C', Items.COPPER_INGOT)
+                .define('S', Items.STONE)
+                .define('B', PDItems.LITHIUM_BATTERY.get())
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.GEO_GENERATOR_ITEM.get())
+                .pattern(" H ")
+                .pattern("PFP")
+                .pattern("CSC")
+                .define('H', PDItems.HEAT_EXCHANGE_UNIT.get())
+                .define('P', PDItems.GEO_PIPE_ITEM.get())
+                .define('F', PDItems.GEO_DEVICE_FRAME_ITEM.get())
+                .define('C', Items.COPPER_INGOT)
+                .define('S', Items.STONE)
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.GEO_PIPE_ITEM.get())
+                .pattern(" C ")
+                .pattern("CBC")
+                .pattern(" C ")
+                .define('C', Items.COPPER_INGOT)
+                .define('B', Items.WATER_BUCKET)
+                .unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.MILLING_CHAMBER.get())
+                .pattern(" I ")
+                .pattern("IGI")
+                .pattern(" I ")
+                .define('I', Items.IRON_INGOT)
+                .define('G', Items.GRAVEL)
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.VIBRATORY_MILL_ITEM.get())
+                .pattern("GMG")
+                .pattern("PFP")
+                .pattern("CSC")
+                .define('G', Items.GLASS)
+                .define('M', PDItems.MILLING_CHAMBER.get())
+                .define('P', Items.PISTON)
+                .define('F', PDItems.GEO_DEVICE_FRAME_ITEM.get())
+                .define('C', Items.COPPER_INGOT)
+                .define('S', Items.STONE)
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
     }
 
 

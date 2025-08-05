@@ -26,6 +26,7 @@ public class PDCreativeTabs {
                         output.accept(PDItems.LITHIUM_BATTERY.get());
                         output.accept(PDItems.LITHIUM_INGOT.get());
                         output.accept(PDItems.LITHIUM_MILLINGS.get());
+                        output.accept(PDItems.MILLING_CHAMBER.get());
                         output.accept(PDItems.RAW_BARBERTONITE.get());
                         output.accept(PDItems.RAW_LITHIUM.get());
 

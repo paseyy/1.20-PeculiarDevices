@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class VibratoryMill extends BaseDeviceBlock {
     public VibratoryMill() {
         super(Properties.of()
-                .mapColor(MapColor.COLOR_ORANGE)
+                .mapColor(MapColor.METAL)
                 .requiresCorrectToolForDrops()
                 .strength(1.5f, 3.0f)
                 .sound(SoundType.METAL)

@@ -31,6 +31,7 @@ public class PDLangProvider extends LanguageProvider {
         add(PDItems.LITHIUM_BATTERY.get(), "Lithium Battery");
         add(PDItems.LITHIUM_INGOT.get(), "Lithium Ingot");
         add(PDItems.LITHIUM_MILLINGS.get(), "Lithium Millings");
+        add(PDItems.MILLING_CHAMBER.get(), "Milling Chamber");
         add(PDItems.RAW_BARBERTONITE.get(), "Raw Barbertonite");
         add(PDItems.RAW_LITHIUM.get(), "Raw Lithium");
 

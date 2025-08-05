@@ -1,6 +1,6 @@
 package com.pasey.peculiardevices.blocks.base;
 
-import com.pasey.peculiardevices.blockentities.base.MachineBlockEntity;
+import com.pasey.peculiardevices.blockentities.base.DeviceBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -60,7 +60,7 @@ public abstract class BaseDeviceBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if(!pLevel.isClientSide()) {
             BlockEntity be = pLevel.getBlockEntity(pPos);
-            if(be instanceof MachineBlockEntity machineBE) {
+            if(be instanceof DeviceBlockEntity machineBE) {
                 ItemStackHandler inventory = machineBE.getInventory();
                 for(int i = 0; i < inventory.getSlots(); i++) {
                     ItemStack stack = inventory.getStackInSlot(i);
@@ -77,6 +77,6 @@ public abstract class BaseDeviceBlock extends BaseEntityBlock {
     @Override
     @ParametersAreNonnullByDefault
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return MachineBlockEntity.createTickerHelper(pBlockEntityType, MachineBlockEntity.TYPE);
+        return DeviceBlockEntity.createTickerHelper(pBlockEntityType, DeviceBlockEntity.TYPE);
     }
 }

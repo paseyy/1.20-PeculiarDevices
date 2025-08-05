@@ -29,6 +29,7 @@ public class PDItemModelsProvider extends ItemModelProvider {
         basicItem(PDItems.LITHIUM_BATTERY.get());
         basicItem(PDItems.LITHIUM_INGOT.get());
         basicItem(PDItems.LITHIUM_MILLINGS.get());
+        basicItem(PDItems.MILLING_CHAMBER.get());
         basicItem(PDItems.RAW_BARBERTONITE.get());
         basicItem(PDItems.RAW_LITHIUM.get());
 

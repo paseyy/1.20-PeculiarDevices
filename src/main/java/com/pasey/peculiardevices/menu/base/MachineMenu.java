@@ -1,6 +1,6 @@
 package com.pasey.peculiardevices.menu.base;
 
-import com.pasey.peculiardevices.blockentities.base.MachineBlockEntity;
+import com.pasey.peculiardevices.blockentities.base.DeviceBlockEntity;
 import com.pasey.peculiardevices.registration.PDBlocks;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
-public abstract class MachineMenu<T extends MachineBlockEntity> extends AbstractContainerMenu {
+public abstract class MachineMenu<T extends DeviceBlockEntity> extends AbstractContainerMenu {
     public static final int PLAYER_INVENTORY_SLOTS = 36;
     public static final int PLAYER_INVENTORY_ROWS = 3;
     public static final int PLAYER_INVENTORY_COLS = 9;

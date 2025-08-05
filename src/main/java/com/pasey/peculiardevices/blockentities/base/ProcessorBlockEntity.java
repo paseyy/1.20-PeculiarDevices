@@ -14,14 +14,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.function.Predicate;
+public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends DeviceBlockEntity {
+    protected final int[] inputSlots;
+    protected final int[] outputSlots;
 
-public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends MachineBlockEntity {
     protected int progress = 0;
     protected int maxProgress = 0;
     protected final ContainerData data;
 
 
-    public ProcessorBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
+    public ProcessorBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, int[] inputSlots, int[] outputSlots) {
         super(pType, pPos, pBlockState, inventorySlots);
 
         this.data = new ContainerData() {
@@ -47,6 +49,9 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
                 return 2;
             }
         };
+
+        this.inputSlots = inputSlots;
+        this.outputSlots = outputSlots;
     }
 
     @Override
@@ -61,7 +66,6 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
             }
 
             progress++;
-            System.out.println("Progress " + progress);
 
             if (progress >= maxProgress) {
                 craftItem();
@@ -88,8 +92,8 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
         NonNullList<Ingredient> inputs = recipe.get().getIngredients();
         for (Ingredient ingredient : inputs) {
             for (int slot : this.getInputSlots()) {
-                if (ingredient.test(inventory.getStackInSlot(slot))) {
-                    inventory.extractItem(slot, ingredient.getItems()[0].getCount(), false);
+                if (ingredient.test(getStackInSlot(slot))) {
+                    getInventory().extractItem(slot, ingredient.getItems()[0].getCount(), false);
                     break;
                 }
 
@@ -101,12 +105,12 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
         NonNullList<ItemStack> outputs = recipe.get().getOutputs();
         for (ItemStack outputItem : outputs) {
             for (int slot : this.getOutputSlots()) {
-                ItemStack inventoryItem = inventory.getStackInSlot(slot);
+                ItemStack inventoryItem = getInventory().getStackInSlot(slot);
                 if (outputItem.getItem() == inventoryItem.getItem()
                         && outputItem.getCount() + inventoryItem.getCount() < outputItem.getMaxStackSize())
                 {
-                    inventory.setStackInSlot(slot, new ItemStack(outputItem.getItem(),
-                            inventory.getStackInSlot(slot).getCount() + outputItem.getCount()));
+                    setStackInSlot(slot, new ItemStack(outputItem.getItem(),
+                            getStackInSlot(slot).getCount() + outputItem.getCount()));
                     success = true;
                     break;
                 }
@@ -117,8 +121,8 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
 
             // Item is not present in inventory slots, move it to empty slot
             for (int slot : this.getOutputSlots()) {
-                if (inventory.getStackInSlot(slot).isEmpty()) {
-                    inventory.setStackInSlot(slot, new ItemStack(outputItem.getItem(), outputItem.getCount()));
+                if (getStackInSlot(slot).isEmpty()) {
+                    setStackInSlot(slot, new ItemStack(outputItem.getItem(), outputItem.getCount()));
                     success = true;
                     break;
                 }
@@ -147,7 +151,7 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
 
     private boolean canInsertItemIntoOutput(NonNullList<ItemStack> result) {
         NonNullList<Integer> outputIndices = getOutputSlots();
-        long emptyOutputSlots = outputIndices.stream().filter(i -> inventory.getStackInSlot(i).isEmpty()).count();
+        long emptyOutputSlots = outputIndices.stream().filter(i -> getStackInSlot(i).isEmpty()).count();
 
         if (result.size() <= emptyOutputSlots) {
             return true;
@@ -161,7 +165,7 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
         {
             for (ItemStack presentItem : outputIndices
                 .stream()
-                .map(inventory::getStackInSlot)
+                .map(this::getStackInSlot)
                 .filter(Predicate.not(ItemStack::isEmpty))
                 .toList())
             {
@@ -178,10 +182,10 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
     }
 
     private Optional<T> getCurrentRecipe() {
-        SimpleContainer container = new SimpleContainer(this.inventory.getSlots());
+        SimpleContainer container = new SimpleContainer(getInventory().getSlots());
 
-        for (int i = 0; i < this.inventory.getSlots(); i++) {
-            container.setItem(i, this.inventory.getStackInSlot(i));
+        for (int i = 0; i < getInventory().getSlots(); i++) {
+            container.setItem(i, getStackInSlot(i));
         }
 
         assert this.level != null;
@@ -190,9 +194,21 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
 
     protected abstract RecipeType<T> getRecipeType();
 
-    protected abstract NonNullList<Integer> getInputSlots();
+    protected NonNullList<Integer> getInputSlots() {
+        NonNullList<Integer> result = NonNullList.create();
+        for (int slot : inputSlots) {
+            result.add(slot);
+        }
+        return result;
+    }
 
-    protected abstract NonNullList<Integer> getOutputSlots();
+    protected NonNullList<Integer> getOutputSlots() {
+        NonNullList<Integer> result = NonNullList.create();
+        for (int slot : outputSlots) {
+            result.add(slot);
+        }
+        return result;
+    }
 
     public int getProgress() {
         return progress;
