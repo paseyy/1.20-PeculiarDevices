@@ -29,8 +29,9 @@ public class PDBlockStatesProvider extends BlockStateProvider {
         downStackableBlock(PDBlocks.GEO_PIPE.get());
 
         // simple blocks
-        simpleBlockWithItem(PDBlocks.LITHIUM_ORE.get(), cubeAll(PDBlocks.LITHIUM_ORE.get()));
         simpleBlockWithItem(PDBlocks.BARBERTONITE_ORE.get(), cubeAll(PDBlocks.BARBERTONITE_ORE.get()));
+        simpleBlockWithItem(PDBlocks.GEO_DEVICE_FRAME.get(), cubeAll(PDBlocks.GEO_DEVICE_FRAME.get()));
+        simpleBlockWithItem(PDBlocks.LITHIUM_ORE.get(), cubeAll(PDBlocks.LITHIUM_ORE.get()));
     }
 
     private void downStackableBlock(Block block) {

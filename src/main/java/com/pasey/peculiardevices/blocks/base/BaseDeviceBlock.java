@@ -23,10 +23,10 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public abstract class BaseMachineBlock extends BaseEntityBlock {
+public abstract class BaseDeviceBlock extends BaseEntityBlock {
     public static DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    protected BaseMachineBlock(Properties pProperties) {
+    protected BaseDeviceBlock(Properties pProperties) {
         super(pProperties);
 
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));

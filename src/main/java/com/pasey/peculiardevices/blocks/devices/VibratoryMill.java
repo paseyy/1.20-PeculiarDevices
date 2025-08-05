@@ -1,7 +1,7 @@
-package com.pasey.peculiardevices.blocks.machines;
+package com.pasey.peculiardevices.blocks.devices;
 
 import com.pasey.peculiardevices.blockentities.VibratoryMillBlockEntity;
-import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
+import com.pasey.peculiardevices.blocks.base.BaseDeviceBlock;
 import com.pasey.peculiardevices.registration.PDBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,8 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -22,13 +20,13 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class VibratoryMill extends BaseMachineBlock {
+public class VibratoryMill extends BaseDeviceBlock {
     public VibratoryMill() {
         super(Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .requiresCorrectToolForDrops()
                 .strength(1.5f, 3.0f)
-                .sound(SoundType.COPPER)
+                .sound(SoundType.METAL)
                 .noOcclusion());
     }
 

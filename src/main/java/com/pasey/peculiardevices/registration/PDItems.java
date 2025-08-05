@@ -25,6 +25,9 @@ public class PDItems {
     public static final RegistryObject<Item> COPPER_MILLINGS =
             ITEMS.register("copper_millings", () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> GEO_DEVICE_FRAME_ITEM =
+            ITEMS.register("geo_device_frame", () -> new BlockItem(PDBlocks.GEO_DEVICE_FRAME.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> GEO_GENERATOR_ITEM =
             ITEMS.register("geo_generator", () -> new BlockItem(PDBlocks.GEO_GENERATOR.get(), new Item.Properties()));
 

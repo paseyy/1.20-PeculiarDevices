@@ -1,6 +1,6 @@
-package com.pasey.peculiardevices.blocks.machines;
+package com.pasey.peculiardevices.blocks.devices;
 
-import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
+import com.pasey.peculiardevices.blocks.base.BaseDeviceBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -8,13 +8,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
-public class GeoGenerator extends BaseMachineBlock {
+public class GeoGenerator extends BaseDeviceBlock {
     public GeoGenerator() {
         super(Properties.of()
-                .mapColor(MapColor.COLOR_ORANGE)
+                .mapColor(MapColor.METAL)
                 .requiresCorrectToolForDrops()
                 .strength(1.5f, 3.0f)
-                .sound(SoundType.COPPER)
+                .sound(SoundType.METAL)
                 .noOcclusion());
     }
 

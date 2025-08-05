@@ -12,7 +12,7 @@ import net.minecraft.tags.BlockTags;
 public class PDTags {
     @SuppressWarnings("unused")
     public static class Blocks {
-        public static final TagKey<Block> PD_MACHINES = tag("pd_machines");
+        public static final TagKey<Block> PD_DEVICES = tag("pd_machines");
         public static final TagKey<Block> PD_ORES = tag("pd_ores");
 
         private static TagKey<Block> tag(String name) {
@@ -23,6 +23,7 @@ public class PDTags {
     public static class Items {
         public static final TagKey<Item> PD_MACHINES = tag("pd_machines");
 
+        public static final TagKey<Item> PD_MILLINGS = tag("pd_millings");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(PeculiarDevices.MODID, name));

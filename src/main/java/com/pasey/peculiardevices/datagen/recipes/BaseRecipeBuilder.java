@@ -1,10 +1,9 @@
 package com.pasey.peculiardevices.datagen.recipes;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.pasey.peculiardevices.recipe.MillingRecipe;
 import com.pasey.peculiardevices.recipe.base.BaseRecipe;
+import com.pasey.peculiardevices.registration.PDRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -28,8 +27,7 @@ public class BaseRecipeBuilder {
     private final float experience;
     private final int craftingTime;
     private final Advancement.Builder advancement = Advancement.Builder.recipeAdvancement();
-    @javax.annotation.Nullable
-    private String group;
+    private final String group;
     private final RecipeSerializer<? extends BaseRecipe<?>> serializer;
     private final ResourceLocation id;
 
@@ -43,11 +41,12 @@ public class BaseRecipeBuilder {
         experience = pExperience;
         craftingTime = pCraftingTime;
         serializer = pSerializer;
+        group = pGroup;
         id = pId;
     }
 
     public static BaseRecipeBuilder milling(RecipeCategory pCategory, List<Ingredient> pIngredients, List<ItemStack> pOutputs, float pExperience, int pCraftingTime, ResourceLocation id) {
-        return new BaseRecipeBuilder(pCategory, MillingRecipe.Serializer.INSTANCE, pIngredients, pOutputs, pExperience, pCraftingTime, "milling", id);
+        return new BaseRecipeBuilder(pCategory, PDRecipes.MILLING_SERIALIZER.get(), pIngredients, pOutputs, pExperience, pCraftingTime, "milling", id);
     }
 
     public FinishedRecipe build() {

@@ -5,7 +5,7 @@
 		"3": "peculiardevices:block/geo_pipe_end_body",
 		"4": "peculiardevices:block/geo_pipe_end_connection",
 		"5": "peculiardevices:block/geo_pipe_bell",
-		"particle": "geo_pipe"
+		"particle": "peculiardevices:block/geo_pipe_body"
 	},
 	"elements": [
 		{

@@ -1,7 +1,7 @@
 package com.pasey.peculiardevices.datagen;
 
 import com.pasey.peculiardevices.PeculiarDevices;
-import com.pasey.peculiardevices.blocks.base.BaseMachineBlock;
+import com.pasey.peculiardevices.blocks.base.BaseDeviceBlock;
 import com.pasey.peculiardevices.registration.PDBlocks;
 import com.pasey.peculiardevices.tags.PDTags;
 import net.minecraft.core.HolderLookup;
@@ -24,13 +24,15 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        Block[] machineBlocks = PDBlocks.BLOCKS.getEntries().stream()
+        Block[] deviceBlocks = PDBlocks.BLOCKS.getEntries().stream()
                 .map(RegistryObject::get)
-                .filter(block -> block instanceof BaseMachineBlock)
+                .filter(block -> block instanceof BaseDeviceBlock)
                 .toArray(Block[]::new);
 
         // generics
-        tag(PDTags.Blocks.PD_MACHINES).add(machineBlocks);
+        tag(PDTags.Blocks.PD_DEVICES)
+                .add(deviceBlocks)
+                .add(PDBlocks.GEO_PIPE.get());
 
         tag(PDTags.Blocks.PD_ORES)
                 .add(PDBlocks.LITHIUM_ORE.get())
@@ -40,7 +42,7 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
         // specifics
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .addTag(PDTags.Blocks.PD_MACHINES)
+                .addTag(PDTags.Blocks.PD_DEVICES)
                 .addTag(PDTags.Blocks.PD_ORES)
         ;
 

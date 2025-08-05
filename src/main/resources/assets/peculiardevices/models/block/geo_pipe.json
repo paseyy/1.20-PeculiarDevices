@@ -3,7 +3,8 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"2": "peculiardevices:block/geo_pipe_bell",
-		"3": "peculiardevices:block/geo_pipe_body"
+		"3": "peculiardevices:block/geo_pipe_body",
+		"particle": "peculiardevices:block/geo_pipe_body"
 	},
 	"elements": [
 		{

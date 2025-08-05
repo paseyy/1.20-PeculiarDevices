@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"1": "peculiardevices:block/geo_generator",
-		"particle": "geo_generator"
+		"particle": "peculiardevices:block/geo_generator"
 	},
 	"elements": [
 		{

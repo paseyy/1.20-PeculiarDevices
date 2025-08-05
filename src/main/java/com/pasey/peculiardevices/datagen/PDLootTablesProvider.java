@@ -23,6 +23,7 @@ public class PDLootTablesProvider extends VanillaBlockLoot {
 
     @Override
     protected void generate() {
+        dropSelf(PDBlocks.GEO_DEVICE_FRAME.get());
         dropSelf(PDBlocks.GEO_GENERATOR.get());
         dropSelf(PDBlocks.GEO_PIPE.get());
         dropSelf(PDBlocks.VIBRATORY_MILL.get());

@@ -77,6 +77,17 @@ public class PDRecipeProvider extends RecipeProvider {
                 .define('C', Items.COPPER_INGOT)
                 .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
                 .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.LITHIUM_BATTERY.get())
+                .pattern(" L ")
+                .pattern("LRL")
+                .pattern(" L ")
+                .define('L', PDItems.LITHIUM_INGOT.get())
+                .define('R', Items.REDSTONE)
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
+
+
     }
 
 
