@@ -4,12 +4,10 @@ import com.pasey.peculiardevices.PeculiarDevices;
 import com.pasey.peculiardevices.datagen.recipes.BaseRecipeBuilder;
 import com.pasey.peculiardevices.registration.PDItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -22,7 +20,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+
 public class PDRecipeProvider extends RecipeProvider {
+    public static final List<ItemLike> CHROMIUM_SMELTABLES = List.of(
+            PDItems.CHROMIUM_MILLINGS.get()
+    );
+    public static final List<ItemLike> COPPER_SMELTABLES = List.of(
+            PDItems.COPPER_MILLINGS.get()
+    );
+    public static final List<ItemLike> GOLD_SMELTABLES = List.of(
+            PDItems.GOLD_MILLINGS.get()
+    );
+    public static final List<ItemLike> IRON_SMELTABLES = List.of(
+            PDItems.IRON_MILLINGS.get()
+    );
     private static final List<ItemLike> LITHIUM_SMELTABLES = List.of(
             PDItems.RAW_LITHIUM.get(),
             PDItems.LITHIUM_MILLINGS.get()
@@ -34,10 +45,38 @@ public class PDRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+        // blasting and smelting
+        PDOreSmelting(consumer, CHROMIUM_SMELTABLES, RecipeCategory.MISC, PDItems.CHROMIUM_INGOT.get(), 0.25f, 200, "chromium_ingot");
+        PDOreBlasting(consumer, CHROMIUM_SMELTABLES, RecipeCategory.MISC, PDItems.CHROMIUM_INGOT.get(), 0.25f, 100, "chromium_ingot");
+
+        PDOreSmelting(consumer, COPPER_SMELTABLES, RecipeCategory.MISC, Items.COPPER_INGOT, 0.25f, 200, "copper_ingot");
+        PDOreBlasting(consumer, COPPER_SMELTABLES, RecipeCategory.MISC, Items.COPPER_INGOT, 0.25f, 100, "copper_ingot");
+
+        PDOreSmelting(consumer, GOLD_SMELTABLES, RecipeCategory.MISC, Items.GOLD_INGOT, 0.25f, 200, "gold_ingot");
+        PDOreBlasting(consumer, GOLD_SMELTABLES, RecipeCategory.MISC, Items.GOLD_INGOT, 0.25f, 100, "gold_ingot");
+
+        PDOreSmelting(consumer, IRON_SMELTABLES, RecipeCategory.MISC, Items.IRON_INGOT, 0.25f, 200, "iron_ingot");
+        PDOreBlasting(consumer, IRON_SMELTABLES, RecipeCategory.MISC, Items.IRON_INGOT, 0.25f, 100, "iron_ingot");
+
         PDOreSmelting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 200, "lithium_ingot");
         PDOreBlasting(consumer, LITHIUM_SMELTABLES, RecipeCategory.MISC, PDItems.LITHIUM_INGOT.get(), 0.25f, 100, "lithium_ingot");
 
-        PDMilling(consumer, List.of(PDItems.RAW_LITHIUM.get()), List.of(new ItemStack(PDItems.LITHIUM_MILLINGS.get(), 2)), 0.25f, 200);
+        // milling
+        PDMilling(consumer, List.of(PDItems.RAW_BARBERTONITE.get()), List.of(new ItemStack(PDItems.CHROMIUM_MILLINGS.get(), 1)), 0.2f, 200);
+        PDMilling(consumer, List.of(Items.RAW_COPPER), List.of(new ItemStack(PDItems.COPPER_MILLINGS.get(), 2)), 0.1f, 200);
+        PDMilling(consumer, List.of(Items.RAW_GOLD), List.of(new ItemStack(PDItems.GOLD_MILLINGS.get(), 2)), 0.1f, 200);
+        PDMilling(consumer, List.of(Items.RAW_IRON), List.of(new ItemStack(PDItems.IRON_MILLINGS.get(), 2)), 0.1f, 200);
+        PDMilling(consumer, List.of(PDItems.RAW_LITHIUM.get()), List.of(new ItemStack(PDItems.LITHIUM_MILLINGS.get(), 2)), 0.1f, 200);
+
+        // crafting
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, PDItems.HEAT_EXCHANGE_UNIT.get())
+                .pattern("G C")
+                .pattern("G C")
+                .pattern("G C")
+                .define('G', Items.GOLD_INGOT)
+                .define('C', Items.COPPER_INGOT)
+                .unlockedBy(getHasName(PDItems.LITHIUM_INGOT.get()), has(PDItems.LITHIUM_INGOT.get()))
+                .save(consumer);
     }
 
 

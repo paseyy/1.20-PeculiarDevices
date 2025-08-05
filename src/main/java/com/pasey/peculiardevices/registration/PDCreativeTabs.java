@@ -17,15 +17,23 @@ public class PDCreativeTabs {
                     .icon(() -> new ItemStack(PDItems.LITHIUM_ORE_ITEM.get()))
                     .title(Component.translatable("creativetab.pd_tab"))
                     .displayItems((displayParameters, output) -> {
-                        output.accept(PDItems.LITHIUM_ORE_ITEM.get());
-                        output.accept(PDItems.RAW_LITHIUM.get());
-                        output.accept(PDItems.LITHIUM_MILLINGS.get());
+                        // items
+                        output.accept(PDItems.CHROMIUM_MILLINGS.get());
+                        output.accept(PDItems.CHROMIUM_INGOT.get());
+                        output.accept(PDItems.GOLD_MILLINGS.get());
+                        output.accept(PDItems.HEAT_EXCHANGE_UNIT.get());
+                        output.accept(PDItems.IRON_MILLINGS.get());
+                        output.accept(PDItems.LITHIUM_BATTERY.get());
                         output.accept(PDItems.LITHIUM_INGOT.get());
+                        output.accept(PDItems.LITHIUM_MILLINGS.get());
+                        output.accept(PDItems.RAW_BARBERTONITE.get());
+                        output.accept(PDItems.RAW_LITHIUM.get());
 
+                        // block items
                         output.accept(PDItems.BARBERTONITE_ORE_ITEM.get());
-
                         output.accept(PDItems.GEO_GENERATOR_ITEM.get());
                         output.accept(PDItems.GEO_PIPE_ITEM.get());
+                        output.accept(PDItems.LITHIUM_ORE_ITEM.get());
                         output.accept(PDItems.VIBRATORY_MILL_ITEM.get());
 
                     })

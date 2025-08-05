@@ -29,6 +29,8 @@ public class PDLootTablesProvider extends VanillaBlockLoot {
 
         add(PDBlocks.LITHIUM_ORE.get(),
                 block -> createOreDrop(PDBlocks.LITHIUM_ORE.get(), PDItems.RAW_LITHIUM.get()));
+        add(PDBlocks.BARBERTONITE_ORE.get(),
+                block -> createOreDrop(PDBlocks.BARBERTONITE_ORE.get(), PDItems.RAW_BARBERTONITE.get()));
     }
 
 }

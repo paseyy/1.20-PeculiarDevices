@@ -34,6 +34,7 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
         tag(PDTags.Blocks.PD_ORES)
                 .add(PDBlocks.LITHIUM_ORE.get())
+                .add(PDBlocks.BARBERTONITE_ORE.get())
         ;
 
 
@@ -47,8 +48,13 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
                 .add(PDBlocks.LITHIUM_ORE.get())
         ;
 
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(PDBlocks.BARBERTONITE_ORE.get())
+        ;
+
         tag(Tags.Blocks.ORE_RATES_SINGULAR)
                 .add(PDBlocks.LITHIUM_ORE.get())
+                .add(PDBlocks.BARBERTONITE_ORE.get())
         ;
 
         tag(Tags.Blocks.ORES)
@@ -57,6 +63,7 @@ public class PDBlockTagsProvider extends BlockTagsProvider {
 
         tag(Tags.Blocks.ORES_IN_GROUND_STONE)
                 .add(PDBlocks.LITHIUM_ORE.get())
+                .add(PDBlocks.BARBERTONITE_ORE.get())
         ;
 
 

@@ -18,6 +18,7 @@ import java.util.List;
 
 public class PDConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_LITHIUM_ORE_KEY = registerKey("lithium_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_BARBERTONITE_ORE_KEY = registerKey("barbertonite_ore");
 
 
     public static void  bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
@@ -28,8 +29,13 @@ public class PDConfiguredFeatures {
                 OreConfiguration.target(replacesStone, PDBlocks.LITHIUM_ORE.get().defaultBlockState()),
                 OreConfiguration.target(replacesDeepslate, PDBlocks.LITHIUM_ORE.get().defaultBlockState())
         );
-
         register(context, OVERWORLD_LITHIUM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldLithiumOres, 10, 0.3f));
+
+        List<OreConfiguration.TargetBlockState> overworldBarbertoniteOres = List.of(
+                OreConfiguration.target(replacesStone, PDBlocks.BARBERTONITE_ORE.get().defaultBlockState()),
+                OreConfiguration.target(replacesDeepslate, PDBlocks.BARBERTONITE_ORE.get().defaultBlockState())
+        );
+        register(context, OVERWORLD_BARBERTONITE_ORE_KEY, Feature.ORE, new OreConfiguration(overworldBarbertoniteOres, 5, 0.9f));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

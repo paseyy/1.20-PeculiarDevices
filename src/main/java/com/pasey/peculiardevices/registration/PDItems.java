@@ -16,14 +16,29 @@ public class PDItems {
     public static final RegistryObject<Item> BARBERTONITE_ORE_ITEM =
             ITEMS.register("barbertonite_ore", () -> new BlockItem(PDBlocks.BARBERTONITE_ORE.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> CHROMIUM_INGOT =
+            ITEMS.register("chromium_ingot", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> CHROMIUM_MILLINGS =
+            ITEMS.register("chromium_millings", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> COPPER_MILLINGS =
+            ITEMS.register("copper_millings", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> GEO_GENERATOR_ITEM =
             ITEMS.register("geo_generator", () -> new BlockItem(PDBlocks.GEO_GENERATOR.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> GEO_PIPE_ITEM =
             ITEMS.register("geo_pipe", () -> new BlockItem(PDBlocks.GEO_PIPE.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> GOLD_MILLINGS =
+            ITEMS.register("gold_millings", () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> HEAT_EXCHANGE_UNIT =
-            ITEMS.register("head_exchange_unit", () -> new Item(new Item.Properties()));
+            ITEMS.register("heat_exchange_unit", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> IRON_MILLINGS =
+            ITEMS.register("iron_millings", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> LITHIUM_BATTERY =
             ITEMS.register("lithium_battery", () -> new Item(new Item.Properties()));
@@ -36,6 +51,9 @@ public class PDItems {
 
     public static final RegistryObject<Item> LITHIUM_ORE_ITEM =
             ITEMS.register("lithium_ore", () -> new BlockItem(PDBlocks.LITHIUM_ORE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> RAW_BARBERTONITE =
+            ITEMS.register("raw_barbertonite", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> RAW_LITHIUM =
             ITEMS.register("raw_lithium", () -> new Item(new Item.Properties()));

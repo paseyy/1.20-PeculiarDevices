@@ -19,9 +19,20 @@ public class PDItemModelsProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        // items
+        basicItem(PDItems.CHROMIUM_INGOT.get());
+        basicItem(PDItems.CHROMIUM_MILLINGS.get());
+        basicItem(PDItems.COPPER_MILLINGS.get());
+        basicItem(PDItems.GOLD_MILLINGS.get());
+        basicItem(PDItems.HEAT_EXCHANGE_UNIT.get());
+        basicItem(PDItems.IRON_MILLINGS.get());
+        basicItem(PDItems.LITHIUM_BATTERY.get());
         basicItem(PDItems.LITHIUM_INGOT.get());
+        basicItem(PDItems.LITHIUM_MILLINGS.get());
+        basicItem(PDItems.RAW_BARBERTONITE.get());
         basicItem(PDItems.RAW_LITHIUM.get());
 
+        // block items
         geoPipeItem(PDItems.GEO_PIPE_ITEM.get());
         blockItem(PDItems.GEO_GENERATOR_ITEM.get());
         blockItem(PDItems.VIBRATORY_MILL_ITEM.get());

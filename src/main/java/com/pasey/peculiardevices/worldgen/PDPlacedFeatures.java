@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PDPlacedFeatures {
     public static final ResourceKey<PlacedFeature> LITHIUM_ORE_PLACED_KEY = registerKey("lithium_ore_placed");
+    public static final ResourceKey<PlacedFeature> BARBERTONITE_ORE_PLACED_KEY = registerKey("barbertonite_ore_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -26,6 +27,14 @@ public class PDPlacedFeatures {
                 PDOrePlacement.commonOrePlacement(20, HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(-32),
                                 VerticalAnchor.absolute(128))
+                )
+        );
+
+        register(context, BARBERTONITE_ORE_PLACED_KEY,
+                configuredFeatures.getOrThrow(PDConfiguredFeatures.OVERWORLD_BARBERTONITE_ORE_KEY),
+                PDOrePlacement.commonOrePlacement(10, HeightRangePlacement.triangle(
+                        VerticalAnchor.absolute(16),
+                        VerticalAnchor.absolute(64))
                 )
         );
     }

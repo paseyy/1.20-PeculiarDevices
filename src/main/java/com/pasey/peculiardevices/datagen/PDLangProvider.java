@@ -21,7 +21,16 @@ public class PDLangProvider extends LanguageProvider {
         add(PDBlocks.VIBRATORY_MILL.get(), "Vibratory Mill");
 
         // Items
+        add(PDItems.CHROMIUM_INGOT.get(), "Chromium Ingot");
+        add(PDItems.CHROMIUM_MILLINGS.get(), "Chromium Millings");
+        add(PDItems.COPPER_MILLINGS.get(), "Copper Millings");
+        add(PDItems.GOLD_MILLINGS.get(), "Gold Millings");
+        add(PDItems.HEAT_EXCHANGE_UNIT.get(), "Heat Exchange Unit");
+        add(PDItems.IRON_MILLINGS.get(), "Iron Millings");
+        add(PDItems.LITHIUM_BATTERY.get(), "Lithium Battery");
         add(PDItems.LITHIUM_INGOT.get(), "Lithium Ingot");
+        add(PDItems.LITHIUM_MILLINGS.get(), "Lithium Millings");
+        add(PDItems.RAW_BARBERTONITE.get(), "Raw Barbertonite");
         add(PDItems.RAW_LITHIUM.get(), "Raw Lithium");
 
         // Creative Tab

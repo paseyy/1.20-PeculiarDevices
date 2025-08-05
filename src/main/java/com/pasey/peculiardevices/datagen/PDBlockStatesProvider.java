@@ -26,12 +26,14 @@ public class PDBlockStatesProvider extends BlockStateProvider {
         horizontalBlock(PDBlocks.VIBRATORY_MILL.get(), state ->
                 models().getExistingFile(modLoc("block/vibratory_mill")));
 
-        stackableBlock(PDBlocks.GEO_PIPE.get());
+        downStackableBlock(PDBlocks.GEO_PIPE.get());
 
+        // simple blocks
         simpleBlockWithItem(PDBlocks.LITHIUM_ORE.get(), cubeAll(PDBlocks.LITHIUM_ORE.get()));
+        simpleBlockWithItem(PDBlocks.BARBERTONITE_ORE.get(), cubeAll(PDBlocks.BARBERTONITE_ORE.get()));
     }
 
-    private void stackableBlock(Block block) {
+    private void downStackableBlock(Block block) {
         getVariantBuilder(block).forAllStates(state -> {
             Boolean is_bottom = state.getValue(GeoPipe.BOTTOM);
             return ConfiguredModel.builder()

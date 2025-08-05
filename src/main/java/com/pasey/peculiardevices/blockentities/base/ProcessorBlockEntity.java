@@ -17,14 +17,12 @@ import java.util.function.Predicate;
 
 public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends MachineBlockEntity {
     protected int progress = 0;
-    // TODO: Make progress dependent on recipe
-    protected int maxProgress;
+    protected int maxProgress = 0;
     protected final ContainerData data;
 
 
-    public ProcessorBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, int ticksToCraft) {
+    public ProcessorBlockEntity(BlockEntityType<? extends MachineBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
         super(pType, pPos, pBlockState, inventorySlots);
-        maxProgress = ticksToCraft;
 
         this.data = new ContainerData() {
             @Override
@@ -58,14 +56,20 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
             return;
 
         if(hasRecipe()) {
+            if(maxProgress == 0) {
+                maxProgress = getRecipeMaxProgress();
+            }
+
             progress++;
             System.out.println("Progress " + progress);
-            setChanged();
 
             if (progress >= maxProgress) {
                 craftItem();
                 progress = 0;
+                maxProgress = 0;
             }
+
+            setChanged();
         }
         else {
             progress = 0;
@@ -80,7 +84,6 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
             System.err.println("Empty recipe despite successful check!");
             return;
         }
-
 
         NonNullList<Ingredient> inputs = recipe.get().getIngredients();
         for (Ingredient ingredient : inputs) {
@@ -134,6 +137,12 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Mach
 
         NonNullList<ItemStack> result = recipe.get().getOutputs();
         return canInsertItemIntoOutput(result);
+    }
+
+    private int getRecipeMaxProgress() {
+        Optional<T> recipe = getCurrentRecipe();
+
+        return recipe.orElseThrow().getCraftingTime();
     }
 
     private boolean canInsertItemIntoOutput(NonNullList<ItemStack> result) {

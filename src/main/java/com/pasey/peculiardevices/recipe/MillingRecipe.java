@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.NotNull;
 
 public class MillingRecipe extends BaseRecipe<MillingRecipe> {
-    public MillingRecipe(NonNullList<Ingredient> input, NonNullList<ItemStack> output, ResourceLocation id) {
-        super(input, output, id);
+    public MillingRecipe(NonNullList<Ingredient> input, NonNullList<ItemStack> output, int craftingTime, float experience, ResourceLocation id) {
+        super(input, output, craftingTime, experience, id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MillingRecipe extends BaseRecipe<MillingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
 
         public Serializer() {
-            super(MillingRecipe::new); // Passes a factory to create MillingRecipe instances
+            super(MillingRecipe::new);
         }
     }
 }

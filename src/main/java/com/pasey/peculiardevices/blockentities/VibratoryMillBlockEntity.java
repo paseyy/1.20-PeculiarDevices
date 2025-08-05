@@ -19,11 +19,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 public class VibratoryMillBlockEntity extends ProcessorBlockEntity<MillingRecipe> {
     public static final int INVENTORY_SLOTS = 4;
-    public static final int CRAFTING_TIME = 200;
 
 
     public VibratoryMillBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(PDBlockEntities.VIBRATORY_MILL_BE.get(), pPos, pBlockState, INVENTORY_SLOTS, CRAFTING_TIME);
+        super(PDBlockEntities.VIBRATORY_MILL_BE.get(), pPos, pBlockState, INVENTORY_SLOTS);
 
         TITLE = Component.translatable("block." + PeculiarDevices.MODID + ".vibratory_mill");
     }
