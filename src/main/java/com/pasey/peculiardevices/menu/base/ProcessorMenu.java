@@ -6,15 +6,15 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ProcessorMenu<T extends ProcessorBlockEntity<?>> extends MachineMenu<T> {
-    protected final ContainerData data;
+public abstract class ProcessorMenu<T extends ProcessorBlockEntity<?>> extends DeviceMenu<T> {
+    protected final ContainerData progressData;
 
-    protected ProcessorMenu(@Nullable MenuType<?> pMenuType, Inventory playerInv, int pContainerId, T pBlockEntity, ContainerData data) {
+    protected ProcessorMenu(@Nullable MenuType<?> pMenuType, Inventory playerInv, int pContainerId, T pBlockEntity, ContainerData progressData) {
         super(pMenuType, pContainerId, pBlockEntity);
-        this.data = data;
+        this.progressData = progressData;
 
-        checkContainerSize(playerInv, INVENTORY_SLOTS);
-        addDataSlots(data);
+        checkContainerSize(playerInv, getInventorySlots());
+        addDataSlots(progressData);
     }
 
     @Override
@@ -23,11 +23,11 @@ public abstract class ProcessorMenu<T extends ProcessorBlockEntity<?>> extends M
     }
 
     public int getProgress() {
-        return data.get(0);
+        return progressData.get(0);
     }
 
     public int getMaxProgress() {
-        return data.get(1);
+        return progressData.get(1);
     }
 
     public boolean isCrafting() {

@@ -33,8 +33,8 @@ public class VibratoryMillMenuScreen extends AbstractContainerScreen<VibratoryMi
     @Override
     @ParametersAreNonnullByDefault
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 

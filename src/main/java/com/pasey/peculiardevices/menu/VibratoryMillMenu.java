@@ -24,8 +24,8 @@ public class VibratoryMillMenu extends ProcessorMenu<VibratoryMillBlockEntity> {
     }
 
     // Server Constructor
-    public VibratoryMillMenu(int containerId, Inventory playerInv, BlockEntity blockEntity, ContainerData data) {
-        super(PDMenus.VIBRATORY_MILL_MENU.get(), playerInv, containerId, (VibratoryMillBlockEntity) blockEntity, data);
+    public VibratoryMillMenu(int containerId, Inventory playerInv, BlockEntity blockEntity, ContainerData progressData) {
+        super(PDMenus.VIBRATORY_MILL_MENU.get(), playerInv, containerId, (VibratoryMillBlockEntity) blockEntity, progressData);
 
         createPlayerHotbar(playerInv);
         createPlayerInventory(playerInv);
@@ -46,4 +46,8 @@ public class VibratoryMillMenu extends ProcessorMenu<VibratoryMillBlockEntity> {
         return Mth.ceil(getScaledProgress() * 24);
     }
 
+    @Override
+    public int getInventorySlots() {
+        return 4;
+    }
 }

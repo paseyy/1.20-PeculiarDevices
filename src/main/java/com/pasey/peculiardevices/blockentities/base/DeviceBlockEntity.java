@@ -1,15 +1,20 @@
 package com.pasey.peculiardevices.blockentities.base;
 
 import com.pasey.peculiardevices.PeculiarDevices;
+import com.pasey.peculiardevices.blockentities.util.CustomEnergyStorage;
+import com.pasey.peculiardevices.blockentities.util.SidedItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,8 +29,9 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvider, TickableBlockEntity {
     public static int INVENTORY_SLOTS;
-    protected Component TITLE;
     public static BlockEntityType<? extends DeviceBlockEntity> TYPE;
+
+    // Inventory
     private final ItemStackHandler inventory;
     private final LazyOptional<IItemHandler>[] sidedHandlers;
     protected final LazyOptional<ItemStackHandler> allOptional = LazyOptional.of(this::getInventory);
@@ -33,9 +39,36 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
     public abstract boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction side);
     public abstract boolean canTakeItemThroughFace(int slot, Direction side);
 
-    public DeviceBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots) {
-        super(pType, pPos, pBlockState);
+    // Energy
+    private CustomEnergyStorage energyStorage;
+    private final LazyOptional<CustomEnergyStorage> energyOptional = LazyOptional.of(() -> energyStorage);
+    protected final ContainerData energyContainerData = new ContainerData() {
+        @Override
+        public int get(int pIndex) {
+            return switch (pIndex) {
+                case 0 -> getEnergyStorage().getEnergyStored();
+                case 1 -> getEnergyStorage().getMaxEnergyStored();
+                default -> throw new IllegalStateException("Unexpected value: " + pIndex);
+            };
+        }
 
+        @Override
+        public void set(int pIndex, int pValue) {
+            switch (pIndex) {
+                case 0 -> getEnergyStorage().setEnergy(pValue);
+                case 1 -> throw new UnsupportedOperationException("Cannot set max energy directly");
+                default -> throw new IllegalStateException("Unexpected value: " + pIndex);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    };
+
+    public DeviceBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, CustomEnergyStorage energyStorage) {
+        super(pType, pPos, pBlockState);
         INVENTORY_SLOTS = inventorySlots;
         TYPE = pType;
         inventory = new ItemStackHandler(inventorySlots) {
@@ -43,11 +76,19 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
                 DeviceBlockEntity.this.setChanged();
-                // BaseMachineBlockEntity.this.level.sendBlockUpdated(BaseMachineBlockEntity.this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
 
         this.sidedHandlers = SidedItemHandler.createSidedHandlers(this);
+        this.energyStorage = energyStorage;
+    }
+
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        if (cap == ForgeCapabilities.ENERGY) {
+            return energyOptional.cast();
+        }
+        return super.getCapability(cap);
     }
 
     @Override
@@ -71,7 +112,14 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
     public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
         CompoundTag data = pTag.getCompound(PeculiarDevices.MODID);
-        getInventory().deserializeNBT(data.getCompound("Inventory"));
+
+        if (data.contains("Inventory", Tag.TAG_COMPOUND)) {
+            getInventory().deserializeNBT(data.getCompound("Inventory"));
+        }
+
+        if (data.contains("Energy", Tag.TAG_INT)) {
+            energyStorage.deserializeNBT(data.get("Energy"));
+        }
     }
 
     @Override
@@ -79,7 +127,16 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
         super.saveAdditional(pTag);
         var data = new CompoundTag();
         data.put("Inventory", getInventory().serializeNBT());
+        data.put("Energy", energyStorage.serializeNBT());
         pTag.put(PeculiarDevices.MODID, data);
+    }
+
+    protected void sendUpdate() {
+        setChanged();
+
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
     }
 
     @Override
@@ -110,9 +167,7 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
 
     @Override
     @NotNull
-    public Component getDisplayName() {
-        return TITLE;
-    }
+    public abstract Component getDisplayName();
 
     public ItemStackHandler getInventory() {
         return this.inventory;
@@ -130,4 +185,15 @@ public abstract class DeviceBlockEntity extends BlockEntity implements MenuProvi
         return allOptional;
     }
 
+    public CustomEnergyStorage getEnergyStorage() {
+        return energyStorage;
+    }
+
+    public LazyOptional<CustomEnergyStorage> getEnergyOptional() {
+        return energyOptional;
+    }
+
+    public ContainerData getEnergyContainerData() {
+        return energyContainerData;
+    }
 }

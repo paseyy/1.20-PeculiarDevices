@@ -1,7 +1,6 @@
 package com.pasey.peculiardevices.menu.base;
 
 import com.pasey.peculiardevices.blockentities.base.DeviceBlockEntity;
-import com.pasey.peculiardevices.registration.PDBlocks;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -12,25 +11,22 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
-public abstract class MachineMenu<T extends DeviceBlockEntity> extends AbstractContainerMenu {
+public abstract class DeviceMenu<T extends DeviceBlockEntity> extends AbstractContainerMenu {
     public static final int PLAYER_INVENTORY_SLOTS = 36;
     public static final int PLAYER_INVENTORY_ROWS = 3;
     public static final int PLAYER_INVENTORY_COLS = 9;
     public static final int SLOT_DISTANCE_PIXELS = 18;
-
-    protected final int INVENTORY_SLOTS;
     protected final T blockEntity;
     protected final ContainerLevelAccess levelAccess;
+    protected final ContainerData energyData;
 
 
-    protected MachineMenu(@Nullable MenuType<?> pMenuType, int pContainerId, T pBlockEntity) {
+    protected DeviceMenu(@Nullable MenuType<?> pMenuType, int pContainerId, T pBlockEntity) {
         super(pMenuType, pContainerId);
         blockEntity = pBlockEntity;
-        INVENTORY_SLOTS = T.INVENTORY_SLOTS;
         this.levelAccess =
                 ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()), blockEntity.getBlockPos());
-
-
+        this.energyData = blockEntity.getEnergyContainerData();
     }
 
 
@@ -73,10 +69,10 @@ public abstract class MachineMenu<T extends DeviceBlockEntity> extends AbstractC
 
         if(pIndex < PLAYER_INVENTORY_SLOTS) {
             if(!moveItemStackTo(fromStack, PLAYER_INVENTORY_SLOTS,
-                    PLAYER_INVENTORY_SLOTS + INVENTORY_SLOTS, false)) {
+                    PLAYER_INVENTORY_SLOTS + this.getInventorySlots(), false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (pIndex < PLAYER_INVENTORY_SLOTS + INVENTORY_SLOTS) {
+        } else if (pIndex < PLAYER_INVENTORY_SLOTS + this.getInventorySlots()) {
             if(!moveItemStackTo(fromStack, 0, PLAYER_INVENTORY_SLOTS, false)) {
                 return ItemStack.EMPTY;
             }
@@ -95,10 +91,24 @@ public abstract class MachineMenu<T extends DeviceBlockEntity> extends AbstractC
     @Override
     @ParametersAreNonnullByDefault
     public boolean stillValid(Player pPlayer) {
-        return stillValid(levelAccess, pPlayer, PDBlocks.VIBRATORY_MILL.get());
+        return stillValid(levelAccess, pPlayer, getBlockEntity().getBlockState().getBlock());
     }
 
     public T getBlockEntity() {
         return blockEntity;
     }
+
+    public int getEnergy() {
+        return energyData.get(0);
+    }
+
+    public int getMaxEnergy() {
+        return energyData.get(1);
+    }
+
+    public float getScaledEnergy() {
+        return (float) getEnergy() / getMaxEnergy();
+    }
+
+    public abstract int getInventorySlots();
 }

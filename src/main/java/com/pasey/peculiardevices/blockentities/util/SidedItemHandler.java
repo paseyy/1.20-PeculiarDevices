@@ -1,5 +1,6 @@
-package com.pasey.peculiardevices.blockentities.base;
+package com.pasey.peculiardevices.blockentities.util;
 
+import com.pasey.peculiardevices.blockentities.base.DeviceBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;

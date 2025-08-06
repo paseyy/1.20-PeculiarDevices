@@ -1,7 +1,9 @@
 package com.pasey.peculiardevices.blockentities.base;
 
+import com.pasey.peculiardevices.blockentities.util.CustomEnergyStorage;
 import com.pasey.peculiardevices.recipe.base.BaseRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
@@ -14,6 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import static com.pasey.peculiardevices.blockentities.util.SidedItemHandler.*;
+import static com.pasey.peculiardevices.blockentities.util.SidedItemHandler.getLeft;
+
 public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends DeviceBlockEntity {
     protected final int[] inputSlots;
     protected final int[] outputSlots;
@@ -23,8 +29,8 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Devi
     protected final ContainerData data;
 
 
-    public ProcessorBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, int[] inputSlots, int[] outputSlots) {
-        super(pType, pPos, pBlockState, inventorySlots);
+    public ProcessorBlockEntity(BlockEntityType<? extends DeviceBlockEntity> pType, BlockPos pPos, BlockState pBlockState, int inventorySlots, int[] inputSlots, int[] outputSlots, CustomEnergyStorage energyStorage) {
+        super(pType, pPos, pBlockState, inventorySlots, energyStorage);
 
         this.data = new ContainerData() {
             @Override
@@ -208,6 +214,26 @@ public abstract class ProcessorBlockEntity<T extends BaseRecipe<T>> extends Devi
             result.add(slot);
         }
         return result;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        BlockState state = this.getBlockState();
+        if (side == getRight(state) || side == Direction.UP) return inputSlots; // input
+        if (side == getLeft(state) || side == Direction.DOWN) return outputSlots; // output
+        return new int[] {0}; // default fallback
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction side) {
+        BlockState state = this.getBlockState();
+        return contains(inputSlots, slot) && (side == Direction.UP || side == getRight(state));
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, Direction side) {
+        BlockState state = this.getBlockState();
+        return contains(outputSlots, slot) && (side == Direction.DOWN || side == getLeft(state));
     }
 
     public int getProgress() {
