@@ -42,10 +42,6 @@ public class VibratoryMillMenu extends ProcessorMenu<VibratoryMillBlockEntity> {
         });
     }
 
-    public int getProgressArrowSize() {
-        return Mth.ceil(getScaledProgress() * 24);
-    }
-
     @Override
     public int getInventorySlots() {
         return 4;

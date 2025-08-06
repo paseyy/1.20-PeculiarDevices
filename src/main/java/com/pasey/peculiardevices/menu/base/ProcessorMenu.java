@@ -1,6 +1,7 @@
 package com.pasey.peculiardevices.menu.base;
 
 import com.pasey.peculiardevices.blockentities.base.ProcessorBlockEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
@@ -32,6 +33,10 @@ public abstract class ProcessorMenu<T extends ProcessorBlockEntity<?>> extends D
 
     public boolean isCrafting() {
         return getProgress() > 0;
+    }
+
+    public int getProgressArrowSize() {
+        return Mth.ceil(getScaledProgress() * 24);
     }
 
     public float getScaledProgress() {

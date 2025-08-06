@@ -88,7 +88,7 @@ public class GeoGeneratorBlockEntity extends GeneratorBlockEntity {
     protected void consumeFuel() {}
 
     @Override
-    protected int getEnergyGenPerTick() {
+    public int getEnergyGenPerTick() {
         return numConnectedPipes;
     }
 

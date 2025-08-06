@@ -71,6 +71,6 @@ public abstract class GeneratorBlockEntity extends DeviceBlockEntity {
 
     protected abstract void consumeFuel();
 
-    protected abstract int getEnergyGenPerTick();
+    public abstract int getEnergyGenPerTick();
 
 }
