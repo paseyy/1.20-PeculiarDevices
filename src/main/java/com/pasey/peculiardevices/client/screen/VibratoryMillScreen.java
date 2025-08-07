@@ -21,7 +21,7 @@ public class VibratoryMillScreen extends BaseDeviceScreen<VibratoryMillMenu> {
     @ParametersAreNonnullByDefault
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
-        renderProgressArrow(pGuiGraphics, this.leftPos + 79, this.topPos + 35, 176, 0, 17);
+        renderProgressArrow(pGuiGraphics, this.leftPos + 79, this.topPos + 35, 186, 0, 17);
     }
 
     @Override
